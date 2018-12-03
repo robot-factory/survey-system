@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        body {
+            background: url("/static/img/case_bg.png") no-repeat fixed top;
+            background-size: 100% 100%;
+            height: 100%;
+        }
+
+        .main {
+            background: rgba(0, 0, 0, 0.6) no-repeat fixed top;
+            width: 100%;
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100%;
+            margin: 0 0;
+        }
+        .input-group {
+            width: 432px;
+            margin: 15% auto;
+            background: rgba(0, 0, 0, 0.1) no-repeat fixed top;
+            border: #ffffff solid 1px;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            padding: 10px;
+            color: #ffffff;
+            overflow: hidden;
+        }
+        .input-group form {
+            width: 100%;
+        }
+        #username {
+            margin-top: 15px;
+        }
+        .form-control {
+            width: 100%;
+        }
+        .crystal {
+            background: rgba(10, 10, 10, 0.2) no-repeat fixed top;
+            border: none;
+            padding: 4px 10px 4px 10px;
+            width: 100%;
+            margin-top: 20px;
+            color: #ffffff;
+        }
+        .input-group .btn {
+            width: 400px;
+            margin-top: 15px;
+        }
+        .form-check-input {
+            vertical-align:middle;
+            margin-top:7px;
+            margin-left:-15px;
+        }
+
+        .grey {
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+<div class="main">
+    <div class="input-group">
+    <form action="/register" method="post">
+        <div class="form-group">
+            <input id="username" name="username" type="text" class="form-control crystal" placeholder="请输入用户账号">
+            <small id="usernameHelp" class="form-text text-muted"></small>
+            <input name="email" type="email" class="form-control crystal" id="exampleInputEmail1"
+                   aria-describedby="emailHelp" placeholder="请输入您的邮箱">
+            <small id="emailHelp" class="form-text text-muted"></small>
+        </div>
+        <div class="form-group">
+            <input name="pwd" type="password" class="form-control crystal" id="exampleInputPassword1" placeholder="请输入密码">
+            <input name="pwd" type="password" class="form-control crystal" id="exampleInputPassword2" placeholder="请重复密码">
+        </div>
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">我已阅读 <a class="grey" href="">《用户手册》</a></label>
+        </div>
+        <button type="submit" class="btn btn-primary">注册</button>
+    </form>
+    </div>
+</div>
+
+
+
+</div>
+</body>
+</html>

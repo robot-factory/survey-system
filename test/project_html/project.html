@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>项目管理</title>
+    <!--<script src="/static/js/jquery-3.3.1.js"></script>-->
+    <!--<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css"-->
+          <!--integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
+    <!--&lt;!&ndash; 最新的 Bootstrap 核心 JavaScript 文件 &ndash;&gt;-->
+<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"-->
+        <!--integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>-->
+    <!--<script src="https://cdn.bootcss.com/ng2-bootstrap/2.0.0-rc.0/ng2-bootstrap.umd.js"></script>-->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style type="text/css">
+        body {
+            height: 100%;
+        }
+        .bg-bcg {
+            margin-bottom: 0;
+        }
+
+        .bg-bcg>.container-fluid .navbar-nav>.active>a {
+            background: rgb(38, 103, 79) no-repeat fixed top;
+        }
+
+        .brand {
+            font-size: 20px;
+        }
+
+        .bg-bcg {
+            background: rgb(22, 83, 68) no-repeat fixed top;
+            border: none;
+            border-radius: 0;
+        }
+
+        .left {
+            float: left;
+            margin-left: 20px!important;
+        }
+
+        .right {
+            float: right!important;
+            margin-right: 20px;
+        }
+
+        .white-font {
+            color: white!important;
+        }
+
+        .bg-bcg .navbar-nav>.open>a, .bg-bcg .navbar-nav>.open>a:focus,
+        .bg-bcg .navbar-nav>.open>a:hover, .bg-bcg .navbar-nav>li>a:hover,
+        .bg-bcg .navbar-nav>li>a:focus{
+            color: #fff;
+            background-color: rgb(38, 103, 79);
+        }
+        .main {
+            width:100%;
+            height: 90%;
+            position:absolute;
+        }
+        .left-sidebar {
+            width:177px;
+            background-color: rgb(238, 248, 248);
+            position:absolute;
+            top: 0px;
+            left: 0;
+            height: 100%;
+            /*margin-left: 0!important;*/
+        }
+
+        .left-sidebar>ul {
+            list-style: none;
+            margin: 0;
+            padding-left: 0;
+
+        }
+        .left-sidebar>ul>li{
+            display: block;
+            position: relative;
+            width: 100%;
+        }
+        .left-sidebar>ul>li>a {
+            display: block;
+            width: 100%;
+            color: rgb(22, 83, 68);
+            background-color: transparent;
+            text-align: center;
+            height: 50px;
+            vertical-align: middle;
+            padding: 15px;
+            /*display: table-cell;*/
+            vertical-align:middle
+
+        }
+        .left-sidebar>ul>li>a:hover {
+            background-color: rgb(184, 210, 195);
+        }.left-sidebar>ul>li>a.current {
+            border-left: 3px solid #485F6E;
+            background-color: rgb(184, 210, 195);
+
+        }
+        .main-content {
+            position: absolute;
+            left: 177px;
+            top: 0;
+            right: 0;
+            background-color: transparent;
+        }
+
+        div.menu button {
+            margin: 20px 20px;
+        }
+        div.table {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+    </style>
+    <script>
+        function leftsideradjust() {
+            document.querySelector(".left-sidebar").style.height = document.documentElement.clientHeight - 50 + "px";
+
+        }
+    </script>
+</head>
+<body>
+    <nav class="navbar  bg-bcg" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header left">
+                <a class="navbar-brand white-font brand" href="#">精研社</a>
+            </div>
+
+            <div class="left">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a class="white-font" href="#">调研系统</a></li>
+                </ul>
+            </div>
+
+            <div class="right">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown right tag">
+                        <a href="#" class="dropdown-toggle white-font" data-toggle="dropdown">
+                            {{ data.username }}
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">个人中心</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">注销</a></li>
+
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+</nav>
+
+    <div class="main">
+        <div class="left-sidebar">
+            <ul>
+                <li><a class="tag current" href="#">进行项目</a></li>
+                <li><a class="tag" href="#">结束项目</a></li>
+                <li><a class="tag" href="#">使用教程</a></li>
+                <li><a class="tag" href="#">更新日志</a></li>
+            </ul>
+        </div>
+        <div class="main-content">
+            <div class="menu">
+                <button style="margin-left: 30px" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus">新建项目</button>
+                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-th-list"></span> 批量操作</button>
+            </div>
+            <div class="table">
+            <table class="table table-hover">
+                <thead>
+                <tr><th>项目名称</th><th>创建时间</th><th>修改时间</th><th>项目状态</th><th>操作</th></tr>
+                </thead>
+                <tbody>
+                {% for project in data.projects %}
+                <tr><td>{{ project.project_name }}</td><td>{{ project.ct }}</td>
+                    <td>{{ project.ut }}</td><td>{{ project.status}}</td><td>管理</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+                </div>
+            <!--<form action="/project_add" method="post">-->
+                <!--<label>项目名称：<input name="projectname" type="text"></label>-->
+                <!--<input type="submit">添加项目</button>-->
+            <!--</form>-->
+
+            <!--<div class="project_detail">项目详情：<br>-->
+                <!--{% for project in data.projects %}-->
+                <!--项目名称: {{ project.project_name }}<br>-->
+                <!--创建时间: {{ project.ct }}<br>-->
+                <!--更改时间: {{ project.ut }}<br>-->
+                <!--项目状态: {{ project.status}}<br>-->
+                <!--<button>管理</button>-->
+                <!--{% endfor %}-->
+            <!--</div>-->
+        </div>
+    </div>
+
+
+    <script>
+        window.onload = function () {
+            leftsideradjust();
+        }
+        window.onresize = function () {
+            leftsideradjust();
+        }
+    </script>
+</body>
+</html>

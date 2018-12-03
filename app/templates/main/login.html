@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>用户登录</title>
+    <link href="/favicon.ico" rel="shortcut icon">
+    <style>
+        html {
+            height: 100%;
+            width: 100%;
+        }
+
+        body {
+            background: url("/static/img/case_bg.png") no-repeat fixed top;
+            background-size: 100% 100%;
+            height: 100%;
+        }
+
+        .main {
+            background: rgba(0, 0, 0, 0.6) no-repeat fixed top;
+            width: 100%;
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100%;
+            margin: 0 0;
+        }
+
+        .card {
+            width: 432px;
+            margin: 15% auto;
+            background: rgba(0, 0, 0, 0.1) no-repeat fixed top;
+            border: #ffffff solid 1px;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            padding: 10px;
+            color: #ffffff;
+            overflow: hidden;
+        }
+
+        .form-control {
+            width: 100%;
+            height: 30px;
+        }
+
+        .crystal {
+            background: rgba(10, 10, 10, 0.2) no-repeat fixed top;
+            border: none;
+            padding: 4px 10px 4px 10px;
+            width: 95%;
+            margin-top: 20px;
+            color: #ffffff;
+        }
+
+        .btn_login {
+            width: 400px;
+            height: 36px;
+            margin-left: 16px;
+            margin-top: 5px;
+            background: rgb(22, 83, 68) no-repeat fixed top;
+            border:none;
+            color: white;
+            -webkit-border-radius: 0.25rem;
+            -moz-border-radius: 0.25rem;
+            border-radius: 0.25rem;
+        }
+        .form-control {
+            -webkit-border-radius: 0.25rem;
+            -moz-border-radius: 0.25rem;
+            border-radius: 0.25rem;
+            height: 36px;
+        }
+        .btn_login:hover {
+            background: rgb(38, 103, 79) no-repeat fixed top;
+
+        }
+
+        .form-check-label {
+            font-size: 12px;
+        }
+        .form-check-input {
+            vertical-align:middle;
+            margin-top:5px;
+        }
+
+        .left {
+            float:left;
+            margin-left: 16px;
+            color:#DDECEE;
+        }
+
+        .right {
+            float:right;
+            margin-right:16px;
+            color:#DDECEE;
+        }
+    </style>
+    <!--<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css"-->
+    <!--integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
+</head>
+<body>
+<div class="main">
+    <div class="card">
+        <form action="/login" method="post">
+            <div class="form-group">
+
+                <input id="username" name="username" type="email" class="form-control crystal" placeholder="请输入用户账号">
+                <div class="message"></div>
+            </div>
+            <div class="form-group">
+                <input name="pwd" id="pwd" type="password" class="form-control crystal"
+                       placeholder="请输入密码">
+            </div>
+            <div class="form-check">
+                <input id="isRmbPwd" type="checkbox" class="form-check-input " onclick="onClickHander(this)">
+                <label class="form-check-label" for="isRmbPwd">
+                    记住密码
+                </label>
+            </div>
+            <button type="submit" class="btn_login" onclick="isRmbPwdHander()">登录</button>
+            <a class="form-check-label left" href="#">忘记密码？</a>
+            <a class="form-check-label right" href="/register">没有账号？注册</a>
+
+        </form>
+    </div>
+</div>
+<script>
+    //设置cookie
+    function setCookie(name, value) {
+        document.cookie = name + '=' + value + ';';
+    }
+
+    //获取cookie
+    function getCookie(name) {
+        let reg = RegExp(name + '=([^;]+)');
+        let arr = document.cookie.match(reg);
+        if (arr) {
+            return arr[1];
+        }
+        else {
+            return '';
+        }
+    }
+
+    //删除cookie
+    function delCookie(name) {
+        setCookie(name, null, -1);
+    }
+
+
+    // 是否记住密码部分
+    function onClickHander(obj) {
+        if (obj.checked) {
+            setCookie('pwd', document.getElementById("pwd").value);
+            setCookie('isRmbPwd', document.getElementById("isRmbPwd").checked);
+            // document.getElementById("isRmbPwd").checked = true;
+        }
+        else {
+            delCookie('pwd');
+            setCookie('isRmbPwd', document.getElementById("isRmbPwd").checked);
+            // document.getElementById("isRmbPwd").checked = false;
+        }
+
+    }
+
+    function isRmbPwdHander() {
+        if (document.getElementById("isRmbPwd").checked) {
+            setCookie('pwd', document.getElementById("pwd").value);
+            setCookie('isRmbPwd', document.getElementById("isRmbPwd").checked);
+        }
+        else {
+            delCookie('pwd');
+            setCookie('isRmbPwd', document.getElementById("isRmbPwd").checked);
+        }
+    }
+
+    // 界面载入时启动
+    window.onload = function () { //从Cookie获取到用户名
+        let username = getCookie("username"); //如果用户名为空,则给表单元素赋空值
+        if (username == '') {
+            document.getElementById("username").value = "";
+        }
+        else {
+            let reg = RegExp('"([^;]+)"');
+            let arr = username.match(reg);
+            document.getElementById("username").value = arr[1];
+        }
+        // pwd
+        let pwd = getCookie("pwd"); //如果用户名为空,则给表单元素赋空值
+        if (pwd == '') {
+            document.getElementById("pwd").value = "";
+        }
+        else {
+            document.getElementById("pwd").value = pwd;
+        }
+        // isRmbPwd
+        let isRmbPwd = getCookie("isRmbPwd"); //如果用户名为空,则给表单元素赋空值
+        if (isRmbPwd == 'false') {
+
+            document.getElementById("isRmbPwd").checked= false;
+        }
+        else {
+            document.getElementById("isRmbPwd").checked = true;
+        }
+
+    }
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ 问卷名 }}</title>
+    <style>
+        body {
+            background-color: darkgrey;
+        }
+        .mainbox {
+            background-color: white;
+            width: 80%;
+        }
+    </style>
+
+
+</head>
+<body>
+<div class="mainbox">
+    <!--问卷主体内容-->
+    <h1 class="qtitle">问卷名</h1>
+
+
+    <div class="introduction">
+        <!--说明部分-->
+        <p>&nbsp; &nbsp; &nbsp; 您好！感谢您在百忙之中填写问卷，请您根据自己的实际感受和看法如实填写，
+            本问卷采用匿名形式，所有数据仅供了解整体员工满意度情况，不针对个别数据进行研究。</p>
+        <img src="#" alt="">
+        <div>-------------------------------分割线----------------------------------</div>
+        
+    </div>
+
+    <div class="danxuan">
+        <!--单选-->
+        <form id="Q10001"action="#">
+            <div class="timuqu">
+                <span class="question_no">1.&nbsp;</span>
+                <span class="question_stem">这是一道单选题</span>
+            </div>
+            <div class="xuanxiangqu">
+                <label ><input type="radio" name="Q10001" value="1">选项1</label><br>
+                <label ><input type="radio" name="Q10001" value="2">选项2</label>
+
+            </div>
+        </form>
+    </div>
+
+    <div class="duoxuan">
+        <!--多选-->
+        <form id="Q10002"action="#">
+            <div class="timuqu">
+                <span class="question_no">2.&nbsp;</span>
+                <span class="question_stem">这是一道多选题</span>
+            </div>
+            <div class="xuanxiangqu">
+                <label><input id="Q10002:1" name="Q10002" type="checkbox" value="1" />选项1 </label>
+                <label><input id="Q10002:2" name="Q10002" type="checkbox" value="2" />选项2 </label>
+                <label><input id="Q10002:3" name="Q10002" type="checkbox" value="3" />选项3 </label>
+                <label><input id="Q10002:4" name="Q10002" type="checkbox" value="4" />选项4 </label>
+            </div>
+        </form>
+    </div>
+
+    <div class="wanquanpaixu">
+        <!--排序（完全排序）-->
+        <form action="#" id="Q10003">
+            <div class="timuqu">
+                <!--题干-->
+                <span class="question_no">3.&nbsp;</span>
+                <span class="question_stem">这是一道完全排序</span>
+            </div>
+
+            <div class="xuanxiangqu">
+                <!--选项区-->
+                <select name="Q10003.1">
+                    <option value="0">请进行选择</option>
+                    <option value="1">选项1</option>
+                    <option value="2">选项2</option>
+                    <option value="3">选项3</option>
+                    <option value="4">选项4</option>
+                </select>
+                <select name="Q10003.2">
+                    <option value="0">请进行选择</option>
+                    <option value="1">选项1</option>
+                    <option value="2">选项2</option>
+                    <option value="3">选项3</option>
+                    <option value="4">选项4</option>
+                </select>
+                <select name="Q10003.3">
+                    <option value="0">请进行选择</option>
+                    <option value="1">选项1</option>
+                    <option value="2">选项2</option>
+                    <option value="3">选项3</option>
+                    <option value="4">选项4</option>
+                </select>
+                <select name="Q10003.4">
+                    <option value="0">请进行选择</option>
+                    <option value="1">选项1</option>
+                    <option value="2">选项2</option>
+                    <option value="3">选项3</option>
+                    <option value="4">选项4</option>
+                </select>
+            </div>
+
+        </form>
+    </div>
+
+    <div class="bufenpaixu">
+        <!--排序（部分排序）-->
+        <form action="#" id="Q10004">
+            <div class="timuqu">
+                <!--题干-->
+                <span class="question_no">4.&nbsp;</span>
+                <span class="question_stem">选择需要排序的选项</span>
+            </div>
+
+            <div class="xuanxiangqu">
+                <label><input id="Q10004.0:1" type="checkbox" name="Q10004" value="1">选项1</label>
+                <label><input id="Q10004.0:2" type="checkbox" name="Q10004" value="2">选项2</label>
+                <label><input id="Q10004.0:3" type="checkbox" name="Q10004" value="3">选项3</label>
+                <label><input id="Q10004.0:4" type="checkbox" name="Q10004" value="4">选项4</label>
+                <label><input id="Q10004.0:5" type="checkbox" name="Q10004" value="5">选项5</label>
+            </div>
+
+            <div class="timuqu">
+                <!--题干-->
+                <span class="question_stem">为所选选项排序</span>
+            </div>
+
+            <div class="xuanxiangqu">
+                <select name="Q10004.1">
+                    <option value="0">请进行选择</option>
+                    <option value="1">选项1</option>
+                    <option value="2">选项2</option>
+                    <option value="3">选项3</option>
+                    <option value="4">选项4</option>
+                </select>
+                <select name="Q10004.2">
+                    <option value="0">请进行选择</option>
+                    <option value="1">选项1</option>
+                    <option value="2">选项2</option>
+                    <option value="3">选项3</option>
+                    <option value="4">选项4</option>
+                </select>
+                <select name="Q10004.3">
+                    <option value="0">请进行选择</option>
+                    <option value="1">选项1</option>
+                    <option value="2">选项2</option>
+                    <option value="3">选项3</option>
+                    <option value="4">选项4</option>
+                </select>
+                <select name="Q10004.4">
+                    <option value="0">请进行选择</option>
+                    <option value="1">选项1</option>
+                    <option value="2">选项2</option>
+                    <option value="3">选项3</option>
+                    <option value="4">选项4</option>
+                </select>
+            </div>
+
+        </form>
+    </div>
+
+    <div class="tiankongti">
+        <!--填空题-->
+        <form action="#" id="Q10005">
+        <div class="timuqu">
+            <span class="question_no">5.&nbsp;</span>
+            <span class="question_stem">文字输入</span>
+        </div>
+            <div class="xuanxiangqu">
+            <input type="text" name="Q10005.1">
+        </div>
+
+        <div class="timuqu"><span class="question_stem">数值输入</span></div>
+            <div class="xuanxiangqu"><input type="number" name="Q10005.2"  ></div>
+
+        </form>
+    </div>
+
+    <div class="dafenti">
+        <!--打分题-->
+        <form action="#" id="Q10006">
+
+            <div class="timuqu">            <span class="question_no">6.&nbsp;</span>
+            <span class="question_stem">这是一道打分题</span>
+            </div>
+
+            <div class="xuanxiangqu">
+                <!--<output name="Q10006.1"></output>-->
+
+                <span>对象1</span>
+                <input type="range" name="Q10006.1" min="1" max="10"/>
+                <output>1分</output>
+
+                <!--<link href="http://cdn.bootcss.com/ionic/1.2.4/css/ionic.css" rel="stylesheet">-->
+                <!--<div class="item range range-positive">-->
+                    <!--<input type="range">-->
+                <!--</div>-->
+            </div>
+        </form>
+
+    </div>
+
+
+    <div class="tiaozhuan">
+        <!--提交或进入下一页-->
+        <!---->
+        <button onclick="f()">提交</button>
+    </div>
+
+</div>
+<script>
+    function serialize(formElement){
+    var res = [],   //存放结果的数组
+        current = null, //当前循环内的表单控件
+        i,  //表单NodeList的索引
+        len, //表单NodeList的长度
+        k,  //select遍历索引
+        optionLen,  //select遍历索引
+        option, //select循环体内option
+        optionValue,    //select的value
+        form = formElement;    //用form变量拿到当前的表单，易于辨识
+
+
+    for(i=0, len=form.elements.length; i<len; i++){
+
+        current = form.elements[i];
+
+        //disabled表示字段禁用，需要区分与readonly的区别
+        if(current.disabled) continue;
+
+        switch(current.type){
+
+            //可忽略控件处理
+            case "file":    //文件输入类型
+            case "submit":  //提交按钮
+            case "button":  //一般按钮
+            case "image":   //图像形式的提交按钮
+            case "reset":   //重置按钮
+            case undefined: //未定义
+                break;
+
+            //select控件
+            case "select-one":
+
+                if(current.name && current.name.length>0){
+                    // 只上传name不为空的选项
+                    for(let k=0,optionLen=current.options.length; k<optionLen; k++){
+                        option = current.options[k];
+                        optionValue = "";
+                        if(option.selected){
+                            if(option.hasAttribute){
+                                optionValue = option.hasAttribute('value') ? option.value : option.text
+                            }else{
+                                //低版本IE需要使用特性 的specified属性，检测是否已规定某个属性
+                                optionValue = option.attributes('value').specified ? option.value : option.text;
+                            }
+                            res.push(encodeURIComponent(current.name) + "=" + encodeURIComponent(optionValue));
+                            break;
+                        }
+                    }
+                }
+                break;
+            case "select-multiple": break;
+            //单选，复选框
+            case "radio":
+            case "checkbox":
+                //这里有个取巧 的写法，这里的判断是跟下面的default相互对应。
+                //如果放在其他地方，则需要额外的判断取值
+                if(!current.checked) break;
+            default:
+                //一般表单控件处理
+                if(current.name && current.name.length){
+                    var Queno = current.hasAttribute('id')? current.id  : current.name
+                    res.push(encodeURIComponent(Queno) + "=" + encodeURIComponent(current.value));
+                }
+
+        }
+    }
+
+
+    return res.join("&");
+}
+
+    var Ajax={
+      get: function(url, fn) {
+        // XMLHttpRequest对象用于在后台与服务器交换数据
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.onreadystatechange = function() {
+          // readyState == 4说明请求已完成
+          if (xhr.readyState == 4 && xhr.status == 200 || xhr.status == 304) {
+            // 从服务器获得数据
+            fn.call(this, xhr.responseText);
+          }
+        };
+        xhr.send();
+      },
+  // datat应为'a=a1&b=b1'这种字符串格式，在jq里如果data为对象会自动将对象转成这种字符串格式
+      post: function (url, data, fn) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", url, true);
+        // 添加http头，发送信息至服务器时内容编码类型
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 304)) {
+            fn.call(this, xhr.responseText);
+          }
+        };
+        xhr.send(data);
+      },
+      postjson: function (url, data, fn) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", url, true);
+        // 添加http头，发送信息至服务器时内容编码类型
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 304)) {
+            fn.call(this, xhr.responseText);
+          }
+        };
+        xhr.send(data);
+      },
+    };
+
+
+    function f(){
+        var formElement_list = document.querySelectorAll("form");
+        // console.log(form_Element.serialize());
+        // for(var data in formElement_list){
+        //     console.log(data)
+        // }
+        var result = []
+        for(let j=0,formLen=formElement_list.length;j<formLen;j++){
+            let data = serialize(formElement_list[j])
+            result.push(data)
+        }
+        Ajax.post('/questionaire/answer?qid=aabbccdd',result.join('&'),function (data) {
+        console.log(data);});
+    }
+
+</script>
+</body>
+</html>

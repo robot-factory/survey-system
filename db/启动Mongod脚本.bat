@@ -1,0 +1,1 @@
+E:\MongoDB\Server\3.6\bin\mongod --dbpath F:\Projects\dataresearch\surveysystem\db\mongodb_data
