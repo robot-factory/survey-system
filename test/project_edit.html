@@ -80,7 +80,7 @@
         console.log(qed);
         $.post('http://localhost:5000/questionaire/project_edit', qed)
         console.log(JSON.parse(qed));
-        var qcontent = ""
+        var qcontent = "";
         var quesjson = JSON.parse(qed);
         for (var key in quesjson.question) {
             let qobs = quesjson.question[key];
@@ -145,14 +145,23 @@
                         qcontent = qcontent +
                             "<div class=\"paixu\">\n" +
                             "        <form id=\"" + key + "\"action=\"#\">\n"+
+
                             "            <div class=\"timuqu\">\n" +
                             "                <span class=\"question_no\">"+qno+"&nbsp;</span>\n" +
                             "                <span class=\"question_stem\">"+ qob.qstem +"</span>\n" +
                             "            </div>\n"+
                             "            <div class=\"xuanxiangqu\">\n";
-                        for(var j = 0; j<qob.qchoices.length; j++){
+                        for(var j = 0; j<qob.labels.length; j++){
+                            var sno = qno;
+                            if(qob.labels.length>1){
+                            sno = qno + "." +String(j+1)
+                            }
                             qcontent = qcontent +
-                                "<select onchange=\"selectcontrol(this)\" name=\"Q10003.1\">";
+                                "<span>"+qob.labels[j]+"</span>" +
+                                "<select onchange=\"selectcontrol(this)\" name=\""+sno+"\">";
+                            for(var k=0;k<qob.choices.length;k++){
+                                
+                            }
 
                                 // "<label><input id=\""+qno+":"+String(j+1)+"\" name=\""+
                                 // qno+"\" type=\"checkbox\" value=\"1\" />"+qob.qchoices[j]+"</label>";
