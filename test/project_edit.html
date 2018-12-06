@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>问卷编辑</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        html, body {
+            height: 100%;
+            width: 100%;
+        }
+
+        .edit-box {
+            width: 50%;
+            height: 100%;
+            background-color: #DDECEE;
+            float: left;
+
+        }
+
+        .display-box {
+            width: 50%;
+            height: 100%;
+            float: left;
+            background-color: #86989B;
+        }
+    </style>
+</head>
+<body>
+<div class="edit-box">
+    <h4>编辑问卷</h4>
+    <button>上传</button>
+    <button class="parser" onclick="questionaire_parser()">解析</button>
+    <form action="#" id="questionaire-edit-jsonmode">
+        <textarea style="margin-left: 20px;" name="questionaire" id="json-question" cols="40" rows="10"></textarea>
+    </form>
+</div>
+<div class="display-box">
+    <script>
+        function selectcontrol(that) {
+            // console.log(that.name);
+            var CurrentSelectName = that.name;
+            var CurrentSelectedOptionIndex = that.selectedIndex;
+            console.log(CurrentSelectedOptionIndex);
+            var selectparent = that.parentElement;
+            var selects = selectparent.querySelectorAll("select");
+            var CurrentSelectIndex = selects.length;
+            for(var i = 0; i<selects.length;i++){
+                if(selects[i].name == CurrentSelectName){
+                    // 确定当前select的index
+                    CurrentSelectIndex = i;
+                    console.log(CurrentSelectIndex);
+                }
+                if(i > CurrentSelectIndex && CurrentSelectedOptionIndex > 0){
+                    // 如果选择的select选择的option index>0，那么之后的selec进行以下操作
+                    if(selects[i].selectedIndex == CurrentSelectedOptionIndex){
+                        // 如果选项和选择select的选择一样，那么选择变为0
+                        selects[i].selectedIndex = 0;
+                    }
+                    var options = selects[i].querySelectorAll('option');
+                    for(var j = 0; j<options.length;j++){
+                        if(j == CurrentSelectedOptionIndex){
+                            options[j].disabled=true;
+                        }else{
+                            options[j].disabled=false;
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</div>
+<script>
+    function questionaire_parser() {
+        var qed = $("#json-question").val();
+        console.log(qed);
+        qed = qed.replace(/\s+/g, "");
+        console.log(qed);
+        $.post('http://localhost:5000/questionaire/project_edit', qed)
+        console.log(JSON.parse(qed));
+        var qcontent = ""
+        var quesjson = JSON.parse(qed);
+        for (var key in quesjson.question) {
+            let qobs = quesjson.question[key];
+            console.log(qobs);
+
+            for (var i = 0; i < qobs.length; i++) {
+                var qob = qobs[i];
+                switch (qob.qtype) {
+                    case 1:
+                        break;
+                    case 2:
+                        var qno = key;
+                        if(qobs.length>1){
+                            qno = key + "." +String(i+1)
+                        }
+                        qcontent = qcontent +
+                            "<div class=\"danxuan\">\n" +
+                            "        <form id=\"" + key + "\"action=\"#\">\n"+
+                            "            <div class=\"timuqu\">\n" +
+                            "                <span class=\"question_no\">"+qno+"&nbsp;</span>\n" +
+                            "                <span class=\"question_stem\">"+ qob.qstem +"</span>\n" +
+                            "            </div>\n"+
+                            "            <div class=\"xuanxiangqu\">\n";
+                        for(var j = 0; j<qob.qchoices.length; j++){
+                            qcontent = qcontent +
+                                "                <label ><input type=\"radio\" name=\""+qno+"\" value=\""+String(j+1)+
+                                "\">"+qob.qchoices[j]+"</label><br>\n";
+                        }
+                        qcontent = qcontent +
+                                "            </div>\n" +
+                                "        </form>\n" +
+                                "    </div>"
+                        break;
+                    case 3:
+                        var qno = key;
+                        if(qobs.length>1){
+                            qno = key + "." +String(i+1)
+                        }
+                        qcontent = qcontent +
+                            "<div class=\"duoxuan\">\n" +
+                            "        <form id=\"" + key + "\"action=\"#\">\n"+
+                            "            <div class=\"timuqu\">\n" +
+                            "                <span class=\"question_no\">"+qno+"&nbsp;</span>\n" +
+                            "                <span class=\"question_stem\">"+ qob.qstem +"</span>\n" +
+                            "            </div>\n"+
+                            "            <div class=\"xuanxiangqu\">\n";
+                        for(var j = 0; j<qob.qchoices.length; j++){
+                            qcontent = qcontent +
+                                "<label><input id=\""+qno+":"+String(j+1)+"\" name=\""+
+                                qno+"\" type=\"checkbox\" value=\"1\" />"+qob.qchoices[j]+"</label>";
+                        }
+                        qcontent = qcontent +
+                            "            </div>\n" +
+                            "        </form>\n" +
+                            "    </div>";
+                        break;
+                    case 4:
+                        var qno = key;
+                        if(qobs.length>1){
+                            qno = key + "." +String(i+1)
+                        }
+                        qcontent = qcontent +
+                            "<div class=\"paixu\">\n" +
+                            "        <form id=\"" + key + "\"action=\"#\">\n"+
+                            "            <div class=\"timuqu\">\n" +
+                            "                <span class=\"question_no\">"+qno+"&nbsp;</span>\n" +
+                            "                <span class=\"question_stem\">"+ qob.qstem +"</span>\n" +
+                            "            </div>\n"+
+                            "            <div class=\"xuanxiangqu\">\n";
+                        for(var j = 0; j<qob.qchoices.length; j++){
+                            qcontent = qcontent +
+                                "<select onchange=\"selectcontrol(this)\" name=\"Q10003.1\">";
+
+                                // "<label><input id=\""+qno+":"+String(j+1)+"\" name=\""+
+                                // qno+"\" type=\"checkbox\" value=\"1\" />"+qob.qchoices[j]+"</label>";
+                        }
+                        qcontent = qcontent +
+                            "            </div>\n" +
+                            "        </form>\n" +
+                            "    </div>";
+                        break;
+
+                    default:
+
+                }
+            }
+        }
+        $(".display-box").html(qcontent);
+    }
+
+    // $("button.parser").click(questionaire_parser);
+</script>
+
+</body>
+</html>

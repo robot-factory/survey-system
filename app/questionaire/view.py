@@ -62,3 +62,8 @@ def project_manage():
     print(dict(project_data))
     return render_template('questionaire/project_manage.html', project= project_data)
 
+@qb.route('/project_edit',methods=['POST'])
+def project_edit():
+    # 三个模式：简单模式、自动模式和专业模式
+    print(request.get_data())
+    return ""
