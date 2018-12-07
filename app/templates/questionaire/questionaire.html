@@ -108,8 +108,8 @@
         function selectcontrol(that) {
             // console.log(that.name);
             var CurrentSelectName = that.name;
-            var CurrentSelectedOptionIndex = that.selectedIndex;
-            console.log(CurrentSelectedOptionIndex);
+            var CurrentSelectedOptionIndexs = [];
+            // console.log(CurrentSelectedOptionIndexs);
             var selectparent = that.parentElement;
             var selects = selectparent.querySelectorAll("select");
             var CurrentSelectIndex = selects.length;
@@ -117,22 +117,28 @@
                 if(selects[i].name == CurrentSelectName){
                     // 确定当前select的index
                     CurrentSelectIndex = i;
-                    console.log(CurrentSelectIndex);
+                    // console.log(CurrentSelectIndex);
                 }
-                if(i > CurrentSelectIndex && CurrentSelectedOptionIndex > 0){
+
+
+                if(i > CurrentSelectIndex){
                     // 如果选择的select选择的option index>0，那么之后的selec进行以下操作
-                    if(selects[i].selectedIndex == CurrentSelectedOptionIndex){
+                    if( CurrentSelectedOptionIndexs.indexOf(selects[i].selectedIndex)>-1){
                         // 如果选项和选择select的选择一样，那么选择变为0
                         selects[i].selectedIndex = 0;
                     }
                     var options = selects[i].querySelectorAll('option');
                     for(var j = 0; j<options.length;j++){
-                        if(j == CurrentSelectedOptionIndex){
+                        if(CurrentSelectedOptionIndexs.indexOf(j)>-1){
                             options[j].disabled=true;
                         }else{
                             options[j].disabled=false;
                         }
                     }
+                }
+
+                if(selects[i].selectedIndex>0){
+                    CurrentSelectedOptionIndexs.push(selects[i].selectedIndex);
                 }
             }
         }
@@ -214,16 +220,18 @@
         <!--打分题-->
         <form action="#" id="Q10006">
 
-            <div class="timuqu">            <span class="question_no">6.&nbsp;</span>
-            <span class="question_stem">这是一道打分题</span>
+            <div class="timuqu">
+                <span class="question_no">6.&nbsp;</span>
+                <span class="question_stem">这是一道打分题</span>
             </div>
 
             <div class="xuanxiangqu">
                 <!--<output name="Q10006.1"></output>-->
 
-                <span>对象1</span>
-                <input type="range" name="Q10006.1" min="1" max="10"/>
-                <output>1分</output>
+                <span>1分</span>
+                <input onchange="rangechange(this)" type="range" name="Q10006.1" min="1" max="10"/>
+                <span>10分</span><span>&nbsp;&nbsp;&nbsp;&nbsp;得分：</span><span class="output"></span>
+
 
                 <!--<link href="http://cdn.bootcss.com/ionic/1.2.4/css/ionic.css" rel="stylesheet">-->
                 <!--<div class="item range range-positive">-->
@@ -233,7 +241,11 @@
         </form>
 
     </div>
-
+    <script>
+        function rangechange(that){
+            that.parentElement.querySelector(".output").innerText=that.value+"分";
+        }
+    </script>
 
     <div class="tiaozhuan">
         <!--提交或进入下一页-->

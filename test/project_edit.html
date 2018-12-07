@@ -31,7 +31,7 @@
 <body>
 <div class="edit-box">
     <h4>编辑问卷</h4>
-    <button>上传</button>
+    <button onclick="postquesjson">上传</button>
     <button class="parser" onclick="questionaire_parser()">解析</button>
     <form action="#" id="questionaire-edit-jsonmode">
         <textarea style="margin-left: 20px;" name="questionaire" id="json-question" cols="40" rows="10"></textarea>
@@ -42,8 +42,8 @@
         function selectcontrol(that) {
             // console.log(that.name);
             var CurrentSelectName = that.name;
-            var CurrentSelectedOptionIndex = that.selectedIndex;
-            console.log(CurrentSelectedOptionIndex);
+            var CurrentSelectedOptionIndexs = [];
+            // console.log(CurrentSelectedOptionIndexs);
             var selectparent = that.parentElement;
             var selects = selectparent.querySelectorAll("select");
             var CurrentSelectIndex = selects.length;
@@ -51,45 +51,80 @@
                 if(selects[i].name == CurrentSelectName){
                     // 确定当前select的index
                     CurrentSelectIndex = i;
-                    console.log(CurrentSelectIndex);
+                    // console.log(CurrentSelectIndex);
                 }
-                if(i > CurrentSelectIndex && CurrentSelectedOptionIndex > 0){
+
+
+                if(i > CurrentSelectIndex){
                     // 如果选择的select选择的option index>0，那么之后的selec进行以下操作
-                    if(selects[i].selectedIndex == CurrentSelectedOptionIndex){
+                    if( CurrentSelectedOptionIndexs.indexOf(selects[i].selectedIndex)>-1){
                         // 如果选项和选择select的选择一样，那么选择变为0
                         selects[i].selectedIndex = 0;
                     }
                     var options = selects[i].querySelectorAll('option');
                     for(var j = 0; j<options.length;j++){
-                        if(j == CurrentSelectedOptionIndex){
+                        if(CurrentSelectedOptionIndexs.indexOf(j)>-1){
                             options[j].disabled=true;
                         }else{
                             options[j].disabled=false;
                         }
                     }
                 }
+
+                if(selects[i].selectedIndex>0){
+                    CurrentSelectedOptionIndexs.push(selects[i].selectedIndex);
+                }
             }
+        }
+        function rangechange(that){
+            that.parentElement.querySelector(".output").innerText=that.value+"分";
         }
     </script>
 </div>
 <script>
+
     function questionaire_parser() {
         var qed = $("#json-question").val();
-        console.log(qed);
         qed = qed.replace(/\s+/g, "");
-        console.log(qed);
-        $.post('http://localhost:5000/questionaire/project_edit', qed)
-        console.log(JSON.parse(qed));
-        var qcontent = "";
+        // $.post('http://localhost:5000/questionaire/project_edit', qed);
         var quesjson = JSON.parse(qed);
+        var qhtml = qhtml_parser(quesjson);
+        $(".display-box").html(qhtml);
+    }
+    function postquesjson() {
+        var qed = $("#json-question").val();
+        qed = qed.replace(/\s+/g, "");
+        // $.post('http://localhost:5000/questionaire/project_edit', qed);
+        var quesjson = JSON.parse(qed);
+        $.post("/",JSON.stringify(quesjson));
+    }
+    function qhtml_parser(quesjson) {
+        var qcontent = "";
+        qcontent = qcontent +
+                "<h1 class='qtitle'>"+
+                quesjson.qtitle+
+                "</h1>";
         for (var key in quesjson.question) {
             let qobs = quesjson.question[key];
             console.log(qobs);
-
+            qcontent = qcontent +
+                    "<form id=\"" + key + "\"action=\"#\">\n";
             for (var i = 0; i < qobs.length; i++) {
                 var qob = qobs[i];
                 switch (qob.qtype) {
                     case 1:
+                        var qno = key;
+                        if(qobs.length>1){
+                            qno = key + "." +String(i+1)
+                        }
+                        qcontent = qcontent +
+                                "<div class=\"introduction\">"+
+                                "<span class=\"question_no\">"+qno+"&nbsp;</span>\n" +
+                                "<span class=\"question_stem\">说明</span>\n" +
+                                "<p class='introduction'>"+
+                                qob.words+
+                                "</p>"+
+                                "</div>";
                         break;
                     case 2:
                         var qno = key;
@@ -97,8 +132,7 @@
                             qno = key + "." +String(i+1)
                         }
                         qcontent = qcontent +
-                            "<div class=\"danxuan\">\n" +
-                            "        <form id=\"" + key + "\"action=\"#\">\n"+
+                            "<div class=\"danxuan question\">\n" +
                             "            <div class=\"timuqu\">\n" +
                             "                <span class=\"question_no\">"+qno+"&nbsp;</span>\n" +
                             "                <span class=\"question_stem\">"+ qob.qstem +"</span>\n" +
@@ -111,7 +145,6 @@
                         }
                         qcontent = qcontent +
                                 "            </div>\n" +
-                                "        </form>\n" +
                                 "    </div>"
                         break;
                     case 3:
@@ -120,8 +153,7 @@
                             qno = key + "." +String(i+1)
                         }
                         qcontent = qcontent +
-                            "<div class=\"duoxuan\">\n" +
-                            "        <form id=\"" + key + "\"action=\"#\">\n"+
+                            "<div class=\"duoxuan question\">\n" +
                             "            <div class=\"timuqu\">\n" +
                             "                <span class=\"question_no\">"+qno+"&nbsp;</span>\n" +
                             "                <span class=\"question_stem\">"+ qob.qstem +"</span>\n" +
@@ -134,7 +166,6 @@
                         }
                         qcontent = qcontent +
                             "            </div>\n" +
-                            "        </form>\n" +
                             "    </div>";
                         break;
                     case 4:
@@ -143,9 +174,7 @@
                             qno = key + "." +String(i+1)
                         }
                         qcontent = qcontent +
-                            "<div class=\"paixu\">\n" +
-                            "        <form id=\"" + key + "\"action=\"#\">\n"+
-
+                            "<div class=\"paixu question\">\n" +
                             "            <div class=\"timuqu\">\n" +
                             "                <span class=\"question_no\">"+qno+"&nbsp;</span>\n" +
                             "                <span class=\"question_stem\">"+ qob.qstem +"</span>\n" +
@@ -158,26 +187,83 @@
                             }
                             qcontent = qcontent +
                                 "<span>"+qob.labels[j]+"</span>" +
-                                "<select onchange=\"selectcontrol(this)\" name=\""+sno+"\">";
-                            for(var k=0;k<qob.choices.length;k++){
-
+                                "<select onchange=\"selectcontrol(this)\" name=\""+sno+"\">"+
+                                "<option value=\"0\">请进行选择</option>";
+                            for(var k=0;k<qob.qchoices.length;k++){
+                                qcontent = qcontent +
+                                    "<option value=\""+ String(k+1) +"\">"+qob.qchoices[k]+"</option>";
                             }
+                            qcontent = qcontent + "</select></br>"
 
                                 // "<label><input id=\""+qno+":"+String(j+1)+"\" name=\""+
                                 // qno+"\" type=\"checkbox\" value=\"1\" />"+qob.qchoices[j]+"</label>";
                         }
                         qcontent = qcontent +
                             "            </div>\n" +
-                            "        </form>\n" +
                             "    </div>";
+                        break;
+                    case 5:
+                        var qno = key;
+                        if(qobs.length>1){
+                            qno = key + "." +String(i+1)
+                        }
+                        qcontent = qcontent +
+                            "<div class=\"tiankongti question\">" +
+                            "            <div class=\"timuqu\">" +
+                            "                <span class=\"question_no\">"+qno+"&nbsp;</span>" +
+                            "                <span class=\"question_stem\">"+ qob.qstem +"</span>" +
+                            "            </div>"+
+                            "            <div class=\"xuanxiangqu\">"+
+                            "                <input type=\"text\" name=\""+qno+"\">" +
+                            "            </div>" +
+                            "</div>";
+                        break;
+                    case 6:
+                        var qno = key;
+                        if(qobs.length>1){
+                            qno = key + "." +String(i+1)
+                        }
+                        qcontent = qcontent +
+                            "<div class=\"tiankongti question\">" +
+                            "       <div class=\"timuqu\">" +
+                            "           <span class=\"question_no\">"+qno+"&nbsp;</span>" +
+                            "           <span class=\"question_stem\">"+ qob.qstem +"</span>" +
+                            "       </div>"+
+                            "       <div class=\"xuanxiangqu\">"+
+                            "           <input type=\"number\" name=\""+qno+"\">" +
+                            "       </div>" +
+                            "</div>";
+                        break;
+                    case 7:
+                        var qno = key;
+                        if(qobs.length>1){
+                            qno = key + "." +String(i+1)
+                        }
+                        qcontent = qcontent +
+                            "<div class=\"dafenti question\">" +
+                            "            <div class=\"timuqu\">" +
+                            "                <span class=\"question_no\">"+qno+"&nbsp;</span>" +
+                            "                <span class=\"question_stem\">"+ qob.qstem +"</span>" +
+                            "            </div>"+
+                            "            <div class=\"xuanxiangqu\">"+
+                            " <span>"+String(qob.min)+"分</span>\n" +
+                            " <input onchange=\"rangechange(this)\" type=\"range\" name=\""+qno+"\" min=\""+String(qob.min)+"\" max=\""+String(qob.max)+"\"/>\n" +
+                            " <span>"+String(qob.max)+"分</span>" +
+                            "<span>&nbsp;&nbsp;&nbsp;&nbsp;得分：</span>" +
+                            "<span class=\"output\"></span>"+
+                            "       </div>" +
+                            "</div>";
+
                         break;
 
                     default:
 
                 }
             }
+            qcontent = qcontent + "</form>";
         }
-        $(".display-box").html(qcontent);
+        return qcontent;
+
     }
 
     // $("button.parser").click(questionaire_parser);
