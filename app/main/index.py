@@ -73,7 +73,7 @@ def register():
         userdata['email'] = request.form.get('email')
 
         result = qadb.user_add(username, sha_pwd, userdata)
-        return jsonify((result,))
+        return redirect(url_for('.project'))
 
 
 @main.route('/project')

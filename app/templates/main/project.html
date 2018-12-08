@@ -153,7 +153,7 @@
     <nav class="navbar  bg-bcg" role="navigation">
         <div class="container-fluid">
             <div class="navbar-header left">
-                <a class="navbar-brand white-font brand" href="#">精研社</a>
+                <a class="navbar-brand white-font brand" href="#">生产者</a>
             </div>
 
             <div class="left">
@@ -187,9 +187,10 @@
         <div class="left-sidebar">
             <ul>
                 <li><a class="tag current" href="#">进行项目</a></li>
-                <li><a class="tag" href="#">结束项目</a></li>
                 <li><a class="tag" href="#">使用教程</a></li>
                 <li><a class="tag" href="#">更新日志</a></li>
+                <li><a class="tag" href="#">论坛交流</a></li>
+                <li><a class="tag" href="#">聊天室</a></li>
             </ul>
         </div>
 
@@ -296,7 +297,7 @@
                         </script>
 
                     </td>
-                    <td><a href="/questionaire/project_manage?qid={{ project.qid }}">管理</a></td>
+                    <td><a href="/questionaire/project_edit?qid={{ project.qid }}">管理</a></td>
                     <td><button><a href="/questionaire/question?qid={{ project.qid }}">访问问卷</a></button></td>
                 </tr>
                 {% endfor %}

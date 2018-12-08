@@ -154,3 +154,5 @@
 2018-11-28 19:13:54,944 - utils.py - INFO - app.main.index: query result:True
 2018-12-02 23:04:08,779 - utils.py - INFO - app.main.index: qid: 5c03d8ddea389d222312b262
 2018-12-02 23:04:08,780 - utils.py - INFO - app.main.index: query result:False
+2018-12-08 23:42:38,491 - utils.py - INFO - app.main.index: qid: 5c0be66065c3f4151ca21fdf
+2018-12-08 23:42:38,491 - utils.py - INFO - app.main.index: query result:False
