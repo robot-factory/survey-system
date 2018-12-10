@@ -8,6 +8,8 @@ from pymongo import MongoClient
 from bson import ObjectId
 import datetime
 import time
+import os
+import pandas as pd
 # from ..utils import
 
 
@@ -28,6 +30,7 @@ class QAHandler:
         # 答案数据库包含各种
         self.project_col = 'project'
         self.users_col = 'users'
+        self.ques_col = 'question'
 
     def user_add(self, username, pwd, userdata):
         #
@@ -85,20 +88,40 @@ class QAHandler:
 
     def data_add(self, qid, form_data):
         data_db_name = self.get_data_collection(qid)
+        print(data_db_name)
         if data_db_name is None:
-            return False, "No such qid!"
+            return [False, "No such qid!"]
         try:
-            self.self.db[data_db_name].insert_one(form_data)
+            self.db[data_db_name].insert_one(form_data)
             result = (True,)
         except Exception as e:
             result = (False, e)
         return result
 
     def data_download(self, qid):
-        pass
+        base_dir = current_app.config['BASIC_DIR']
+        data_path = os.path.join(base_dir,'db','project_data',qid)
+        if not os.path.exists(data_path):
+            os.makedirs(data_path,exist_ok=True)
+        data_path= os.path.join(base_dir,'db','project_data',qid,'data.xlsx')
+        data_db_name = self.get_data_collection(qid)
+        result = list(self.db[data_db_name].find())
+        pd.DataFrame(result).to_excel(data_path)
 
-    def ques_add(self, ques_list):
-        pass
+    def ques_add(self, qid, ques_dict):
+        id = ObjectId(qid)
+        col_project = self.db[self.project_col]
+
+        return col_project.update(
+            {'_id': id},
+            {'$set': {"ques":ques_dict}}
+        )
+
+    def ques_get(self,qid):
+        id = ObjectId(qid)
+        return self.db[self.project_col].find_one(
+            {'_id':id}
+        )
 
     def ques_update(self, ):
         pass

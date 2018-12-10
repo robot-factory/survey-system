@@ -111,9 +111,9 @@
 <div class="edit-box">
     <h2>编辑问卷</h2>
     <div class="menu">
-        <button onclick="postquesjson()">上传</button>
-        <button class="parser" onclick="questionaire_parser()">解析</button>
-        <button onclick="addques()">添加题目</button>
+        <button onclick="postquesjson()">上传问卷</button>
+        <button class="parser" onclick="questionaire_parser()">问卷预览</button>
+        <!--<button onclick="addques()">添加题目</button>-->
     </div>
 
     <form action="#" id="questionaire-edit-jsonmode">
@@ -188,7 +188,7 @@
         qed = qed.replace(/\s+/g, "");
         // $.post('http://localhost:5000/questionaire/project_edit', qed);
         var quesjson = JSON.parse(qed);
-        $.post("/",JSON.stringify(quesjson));
+        $.post("/questionaire/project_edit_add?qid={{ qid }}",JSON.stringify(quesjson));
     }
     function qhtml_parser(quesjson) {
         var qcontent = "";
@@ -196,8 +196,11 @@
                 "<h1 class='qtitle'>"+
                 quesjson.qtitle+
                 "</h1>";
-        for (var key in quesjson.question) {
-            let qobs = quesjson.question[key];
+        for(var no=0;no<quesjson.order.length; no++){
+            var key = quesjson.order[no];
+        // }
+        // for (var key in quesjson.question) {
+            var qobs = quesjson.question[key];
             console.log(qobs);
             qcontent = qcontent +
                     "<form id=\"" + key + "\"action=\"#\">\n";
@@ -207,7 +210,7 @@
                     case 1:
                         var qno = key;
                         if(qobs.length>1){
-                            qno = key + "." +String(i+1)
+                            qno = key + "_" +String(i+1)
                         }
                         qcontent = qcontent +
                                 "<div class=\"introduction\">"+
@@ -223,18 +226,18 @@
                     case 2:
                         var qno = key;
                         if(qobs.length>1){
-                            qno = key + "." +String(i+1)
+                            qno = key + "_" +String(i+1)
                         }
                         qcontent = qcontent +
                             "<div class=\"danxuan question\">\n" +
-                            "            <div class=\"timuqu\">\n" +
-                            "                <span class=\"question_no\">"+qno+"&nbsp;</span>\n" +
-                            "                <span class=\"question_stem\">"+ qob.qstem +"</span>\n" +
-                            "            </div>\n"+
-                            "            <div class=\"xuanxiangqu\">\n";
+                            "<div class=\"timuqu\">\n" +
+                            "<span class=\"question_no\">"+qno+"&nbsp;</span>\n" +
+                            "<span class=\"question_stem\">"+ qob.qstem +"</span>\n" +
+                            "</div>\n"+
+                            "<div class=\"xuanxiangqu\">\n";
                         for(var j = 0; j<qob.qchoices.length; j++){
                             qcontent = qcontent +
-                                "                <label ><input type=\"radio\" name=\""+qno+"\" value=\""+String(j+1)+
+                                "<label ><input type=\"radio\" name=\""+qno+"\" value=\""+String(j+1)+
                                 "\">"+qob.qchoices[j]+"</label><br>\n";
                         }
                         qcontent = qcontent +
@@ -244,19 +247,19 @@
                     case 3:
                         var qno = key;
                         if(qobs.length>1){
-                            qno = key + "." +String(i+1)
+                            qno = key + "_" +String(i+1)
                         }
                         qcontent = qcontent +
                             "<div class=\"duoxuan question\">\n" +
-                            "            <div class=\"timuqu\">\n" +
-                            "                <span class=\"question_no\">"+qno+"&nbsp;</span>\n" +
-                            "                <span class=\"question_stem\">"+ qob.qstem +"</span>\n" +
-                            "            </div>\n"+
-                            "            <div class=\"xuanxiangqu\">\n";
+                            "<div class=\"timuqu\">\n" +
+                            "<span class=\"question_no\">"+qno+"&nbsp;</span>\n" +
+                            "<span class=\"question_stem\">"+ qob.qstem +"</span>\n" +
+                            "</div>\n"+
+                            "<div class=\"xuanxiangqu\">\n";
                         for(var j = 0; j<qob.qchoices.length; j++){
                             qcontent = qcontent +
                                 "<label><input id=\""+qno+":"+String(j+1)+"\" name=\""+
-                                qno+"\" type=\"checkbox\" value=\"1\" />"+qob.qchoices[j]+"</label>";
+                                qno+":"+String(j+1)+"\" type=\"checkbox\" value=\"1\" />"+qob.qchoices[j]+"</label>";
                         }
                         qcontent = qcontent +
                             "            </div>\n" +
@@ -265,7 +268,7 @@
                     case 4:
                         var qno = key;
                         if(qobs.length>1){
-                            qno = key + "." +String(i+1)
+                            qno = key + "_" +String(i+1)
                         }
                         qcontent = qcontent +
                             "<div class=\"paixu question\">\n" +
@@ -277,7 +280,7 @@
                         for(var j = 0; j<qob.labels.length; j++){
                             var sno = qno;
                             if(qob.labels.length>1){
-                            sno = qno + "." +String(j+1)
+                            sno = qno + "_" +String(j+1)
                             }
                             qcontent = qcontent +
                                 "<span>"+qob.labels[j]+"</span>"+
@@ -299,7 +302,7 @@
                     case 5:
                         var qno = key;
                         if(qobs.length>1){
-                            qno = key + "." +String(i+1)
+                            qno = key + "_" +String(i+1)
                         }
                         qcontent = qcontent +
                             "<div class=\"tiankongti question\">" +
@@ -315,7 +318,7 @@
                     case 6:
                         var qno = key;
                         if(qobs.length>1){
-                            qno = key + "." +String(i+1)
+                            qno = key + "_" +String(i+1)
                         }
                         qcontent = qcontent +
                             "<div class=\"tiankongti question\">" +
@@ -331,7 +334,7 @@
                     case 7:
                         var qno = key;
                         if(qobs.length>1){
-                            qno = key + "." +String(i+1)
+                            qno = key + "_" +String(i+1)
                         }
                         qcontent = qcontent +
                             "<div class=\"dafenti question\">" +
@@ -362,7 +365,13 @@
     // $("button.parser").click(questionaire_parser);
 </script>
 <script>
-
+    window.onload = function () {
+        $.get('/questionaire/project_edit_get?qid={{qid}}', function (data) {
+            var dataobject = JSON.parse(data);
+            var jsondata = JSON.stringify(dataobject,null,'\t')
+            $('#json-question').val(jsondata)
+        })
+    }
 </script>
 </body>
 </html>

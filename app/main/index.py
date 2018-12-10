@@ -22,7 +22,7 @@ log = logger(__name__)
 @main.route('/')
 def index():
     # log.info('index')
-    return render_template('main/index.html')
+    return "你好哈"
 
 
 @main.route('/login', methods=['GET', 'POST'])
