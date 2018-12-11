@@ -7,6 +7,7 @@ from flask import (
     url_for,
     render_template,
     jsonify,
+    send_file,
 )
 from ..models import (
     quuestionaire,
@@ -59,8 +60,8 @@ def answer():
         # response = qadb.data_add(qid, form_data)
         return 'success'
     if request.method == 'GET':
-        qadb.data_download(qid)
-        return "ok"
+        filepath = qadb.data_download(qid)
+        return send_file(filepath)
 
 
 @qb.route('/project_manage')

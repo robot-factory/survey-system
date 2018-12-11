@@ -103,10 +103,14 @@ class QAHandler:
         data_path = os.path.join(base_dir,'db','project_data',qid)
         if not os.path.exists(data_path):
             os.makedirs(data_path,exist_ok=True)
+
+        answer_order = self.ques_get(qid)['ques']['answer_order']
         data_path= os.path.join(base_dir,'db','project_data',qid,'data.xlsx')
         data_db_name = self.get_data_collection(qid)
-        result = list(self.db[data_db_name].find())
-        pd.DataFrame(result).to_excel(data_path)
+        result = list(self.db[data_db_name].find());
+        output = pd.DataFrame(columns=answer_order)
+        output.append(pd.DataFrame(result),ignore_index=True,sort=False).to_excel(data_path)
+        return data_path
 
     def ques_add(self, qid, ques_dict):
         id = ObjectId(qid)

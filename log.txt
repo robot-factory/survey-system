@@ -241,3 +241,8 @@
 2018-12-10 23:49:18,652 - utils.py - INFO - app.main.index: qid: 5c0be66065c3f4151ca21fdf
 2018-12-10 23:51:13,825 - utils.py - INFO - app.main.index: qid: 5c0be66065c3f4151ca21fdf
 2018-12-10 23:54:21,582 - utils.py - INFO - app.main.index: qid: 5c0be66065c3f4151ca21fdf
+2018-12-11 13:11:12,379 - utils.py - INFO - app.main.index: qid: 5c0be66065c3f4151ca21fdf
+2018-12-11 13:11:12,382 - utils.py - INFO - app.main.index: query result:False
+2018-12-11 13:36:21,194 - utils.py - INFO - app.main.index: qid: 5c0be66065c3f4151ca21fdf
+2018-12-11 13:38:10,850 - utils.py - INFO - app.main.index: qid: 5c0be66065c3f4151ca21fdf
+2018-12-11 13:42:52,350 - utils.py - INFO - app.main.index: qid: 5c0be66065c3f4151ca21fdf

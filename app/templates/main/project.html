@@ -126,6 +126,7 @@
         function getNow(s) {
             return s < 10 ? '0' + s: s;
         }
+
         function formattimestamp(timestamp) {
             let myDate = new Date(timestamp);
             //获取当前年
@@ -242,7 +243,7 @@
             <div class="table">
             <table class="table table-hover">
                 <thead>
-                <tr><th>项目名称</th><th>创建时间</th><th>修改时间</th><th>项目状态</th><th>操作</th><th>访问地址</th></tr>
+                <tr><th>项目名称</th><th>创建时间</th><th>修改时间</th><th>操作</th><th>数据</th><th>访问地址</th></tr>
                 </thead>
                 <tbody>
                 {% for project in data.projects %}
@@ -275,30 +276,30 @@
                         </script>
                     </td>
                     <td>
-                        <script>
-                            // var status = {{ project.status }};
-                            switch({{ project.status }})
-                            {
-                                case 0:
-                                    document.write("未启动");
-                                    break;
-                                case 1:
-                                    document.write("运行中");
-                                    break;
-                                case 2:
-                                    document.write("已暂停");
-                                    break;
-                                case 3:
-                                    document.write("已结束");
-                                    break;
-                                default:
-                                    document.write("");
-                            }
-                        </script>
+                        <a href="javascript:void(0);" onclick="window.open('/questionaire/project_edit?qid={{ project.qid }}','_blank');" target="_blank">问卷编辑</a>
+                        <!--<script>-->
+                            <!--// var status = {{ project.status }};-->
+                            <!--switch({{ project.status }})-->
+                            <!--{-->
+                                <!--case 0:-->
+                                    <!--document.write("未启动");-->
+                                    <!--break;-->
+                                <!--case 1:-->
+                                    <!--document.write("运行中");-->
+                                    <!--break;-->
+                                <!--case 2:-->
+                                    <!--document.write("已暂停");-->
+                                    <!--break;-->
+                                <!--case 3:-->
+                                    <!--document.write("已结束");-->
+                                    <!--break;-->
+                                <!--default:-->
+                                    <!--document.write("");-->
+                            <!--}-->
+                        <!--</script>-->
 
                     </td>
                     <td>
-                        <a href="javascript:void(0);" onclick="window.open('/questionaire/project_edit?qid={{ project.qid }}','_blank');" target="_blank">管理</a>
                         <a href="javascript:void(0);" onclick="window.open('/questionaire/answer?qid={{ project.qid }}','_blank');" target="_blank">下载数据</a>
                     </td>
                     <td>

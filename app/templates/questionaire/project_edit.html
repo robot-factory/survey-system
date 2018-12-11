@@ -188,8 +188,10 @@
         qed = qed.replace(/\s+/g, "");
         // $.post('http://localhost:5000/questionaire/project_edit', qed);
         var quesjson = JSON.parse(qed);
+        quesjson['answer_order'] = get_answer_order(quesjson);
         $.post("/questionaire/project_edit_add?qid={{ qid }}",JSON.stringify(quesjson));
     }
+
     function qhtml_parser(quesjson) {
         var qcontent = "";
         qcontent = qcontent +
@@ -362,14 +364,86 @@
 
     }
 
+    function get_answer_order(quesjson) {
+        var ao = [];
+        for(var no=0;no<quesjson.order.length; no++){
+            var key = quesjson.order[no];
+            var qobs = quesjson.question[key];
+            for (var i = 0; i < qobs.length; i++) {
+                var qob = qobs[i];
+                switch (qob.qtype) {
+                    case 1:
+                        break;
+                    case 2:
+                        var qno = key;
+                        if(qobs.length>1){
+                            qno = key + "_" +String(i+1)
+                        }
+                        ao.push(qno);
+                        break;
+                    case 3:
+                        var qno = key;
+                        if(qobs.length>1){
+                            qno = key + "_" +String(i+1)
+                        }
+                        for(var j = 0; j<qob.qchoices.length; j++){
+                            ao.push(qno+":"+String(j+1));
+                        }
+                        break;
+                    case 4:
+                        var qno = key;
+                        if(qobs.length>1){
+                            qno = key + "_" +String(i+1)
+                        }
+
+                        for(var j = 0; j<qob.labels.length; j++){
+                            var sno = qno;
+                            if(qob.labels.length>1){
+                            sno = qno + "_" +String(j+1)
+                            }
+                            ao.push(sno);
+                        }
+                        break;
+                    case 5:
+                        var qno = key;
+                        if(qobs.length>1){
+                            qno = key + "_" +String(i+1)
+                        }
+                        ao.push(qno);
+                        break;
+                    case 6:
+                        var qno = key;
+                        if(qobs.length>1){
+                            qno = key + "_" +String(i+1)
+                        }
+                        ao.push(qno);
+                        break;
+                    case 7:
+                        var qno = key;
+                        if(qobs.length>1){
+                            qno = key + "_" +String(i+1)
+                        }
+                        ao.push(qno);
+                        break;
+
+                    default:
+
+                }
+            }
+        }
+        // console.log(ao);
+        return ao;
+
+    }
+
     // $("button.parser").click(questionaire_parser);
 </script>
 <script>
     window.onload = function () {
         $.get('/questionaire/project_edit_get?qid={{qid}}', function (data) {
             var dataobject = JSON.parse(data);
-            var jsondata = JSON.stringify(dataobject,null,'\t')
-            $('#json-question').val(jsondata)
+            var jsondata = JSON.stringify(dataobject,null,'\t');
+            $('#json-question').val(jsondata);
         })
     }
 </script>
