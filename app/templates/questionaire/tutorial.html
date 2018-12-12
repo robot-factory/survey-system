@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>项目管理</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style type="text/css">
+        body {
+            height: 100%;
+        }
+        .bg-bcg {
+            margin-bottom: 0;
+        }
+
+        .bg-bcg>.container-fluid .navbar-nav>.active>a {
+            background: rgb(38, 103, 79) no-repeat fixed top;
+        }
+
+        .brand {
+            font-size: 20px;
+        }
+
+        .bg-bcg {
+            background: rgb(22, 83, 68) no-repeat fixed top;
+            border: none;
+            border-radius: 0;
+        }
+
+        .left {
+            float: left;
+            margin-left: 20px!important;
+        }
+
+        .right {
+            float: right!important;
+            margin-right: 20px;
+        }
+
+        .white-font {
+            color: white!important;
+        }
+
+        .bg-bcg .navbar-nav>.open>a, .bg-bcg .navbar-nav>.open>a:focus,
+        .bg-bcg .navbar-nav>.open>a:hover, .bg-bcg .navbar-nav>li>a:hover,
+        .bg-bcg .navbar-nav>li>a:focus{
+            color: #fff;
+            background-color: rgb(38, 103, 79);
+        }
+        .main {
+            width:100%;
+            height: 90%;
+            position:absolute;
+        }
+        .left-sidebar {
+            width:177px;
+            background-color: rgb(238, 248, 248);
+            position:absolute;
+            top: 0px;
+            left: 0;
+            height: 100%;
+            /*margin-left: 0!important;*/
+        }
+
+        .left-sidebar>ul {
+            list-style: none;
+            margin: 0;
+            padding-left: 0;
+
+        }
+        .left-sidebar>ul>li{
+            display: block;
+            position: relative;
+            width: 100%;
+        }
+        .left-sidebar>ul>li>a {
+            display: block;
+            width: 100%;
+            color: rgb(22, 83, 68);
+            background-color: transparent;
+            text-align: center;
+            height: 50px;
+            vertical-align: middle;
+            padding: 15px;
+            /*display: table-cell;*/
+            vertical-align:middle
+
+        }
+        .left-sidebar>ul>li>a:hover {
+            background-color: rgb(184, 210, 195);
+        }.left-sidebar>ul>li>a.current {
+            border-left: 3px solid #485F6E;
+            background-color: rgb(184, 210, 195);
+
+        }
+        .main-content {
+            position: absolute;
+            left: 177px;
+            top: 0;
+            right: 0;
+            background-color: transparent;
+            padding: 30px 60px;
+            overflow:auto;
+        }
+        .main-content h2 {
+            margin-top:30px;
+        }
+
+        .main-content p,.main-content li {
+            font-size: 18px;
+            line-height: 1.5;
+            margin-top: 10px;
+        }
+        .main-content img {
+            width: 80%;
+            margin：10px auto;
+            display: block;
+
+        }
+
+        div.menu button {
+            margin: 20px 20px;
+        }
+        div.table {
+            padding-left: 15px;
+            padding-right: 15px;
+            overflow: scroll;
+        }
+    </style>
+    <script>
+        function heightadjust(selector,delta=50) {
+            document.querySelector(selector).style.height = document.documentElement.clientHeight - delta + "px";
+        }
+
+        function getNow(s) {
+            return s < 10 ? '0' + s: s;
+        }
+
+        function formattimestamp(timestamp) {
+            let myDate = new Date(timestamp);
+            //获取当前年
+            let year=myDate.getFullYear();
+            //获取当前月
+            let month=myDate.getMonth()+1;
+            //获取当前日
+            let date=myDate.getDate();
+            let h=myDate.getHours();       //获取当前小时数(0-23)
+            let m=myDate.getMinutes();     //获取当前分钟数(0-59)
+            let s=myDate.getSeconds();
+
+            let now=year+'-'+getNow(month)+"-"+getNow(date)+" "+getNow(h)+':'+getNow(m)+":"+getNow(s);
+            return now
+        }
+
+        // function
+
+    </script>
+</head>
+<body>
+
+
+<!--导航栏-->
+    <nav class="navbar  bg-bcg" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header left">
+                <a class="navbar-brand white-font brand" href="#">生产者</a>
+            </div>
+
+            <div class="left">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a class="white-font" href="#">调研系统</a></li>
+                </ul>
+            </div>
+
+            <div class="right">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown right tag">
+                        <a href="#" class="dropdown-toggle white-font" data-toggle="dropdown">
+                            {{ data.username }}
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">个人中心</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">注销</a></li>
+
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+</nav>
+
+<!--非导航栏-->
+    <div class="main">
+        <!--左侧-->
+        <div class="left-sidebar">
+            <ul>
+                <li><a class="tag" href="/project">进行项目</a></li>
+                <li><a class="tag current" href="#">使用教程</a></li>
+                <li><a class="tag" href="#">更新日志</a></li>
+                <li><a class="tag" href="#">论坛交流</a></li>
+                <li><a class="tag" href="#">聊天室</a></li>
+            </ul>
+        </div>
+
+        <!--主要内容-->
+        <div class="main-content">
+            <h2>这个问卷系统是干嘛的？和问卷星爱调研之类的调研网站相比有什么价值？</h2><hr>
+            <p>写下这句话是，这是一个还不成熟的线上问卷调研系统，适用于市场调研中的定量部分，
+                希望当你看到它时它已经是个功能成熟的系统。</p>
+            <p>
+                <strong>为什么要写一个这样的系统呢？</strong></p><p>
+                我曾在汽车行业的市调公司工作过一段时间，和普通学术研究的问卷需求不同，
+                市场调研所需要的问卷更长，调研场景更偏向线下，可能出现无网的情况。另一方面，市调的问卷逻辑较为复杂。
+            普通版的问卷星和爱调研无法满足，而专业版的则需要由调研公司的人员进行编程，费用也相对较高。事实上，
+                我们使用的是一款叫做NIPO的国外软件，这款软件历史非常悠久（既是褒义也是贬义），
+                我们购买了这款软件的Pad版和一些线上的云服务。工作过程是这样的，我们先根据要调研的问卷用它的软件进行编程，
+                然后把代码上传到云平台上，调研人员则在平板上NIPO的app里下载问卷，每次联网时会同步数据。</p>
+            <p>
+            看上去挺美好的，但却有以下一些问题：
+            <ul><li>NIPO编写问卷的语言非常陈旧，大概是90年代的风格，使用起来十分变扭，有些功能还实现不了。</li>
+                <li>编程的重复工作很多，自动化程度较低。</li></ul></p>
+            <p>
+            当年编写一套问卷系统可能十分复杂，但现在有python和js，已经相对容易很多了，所以我就想自己尝试一下。
+            项目代码开源在：<a href="https://github.com/BohengLiu/survey-system">https://github.com/BohengLiu/survey-system</a>上。
+            欢迎大家提需求，也欢迎感兴趣的同学来贡献代码。</p>
+            <p><strong>这个项目的未来</strong></p>
+            <p>和NIPO相比，这个系统无疑很稚嫩，但它是开源的，有无限的拓展可能，并且无任何费用。未来会朝一下几个方面进行更新：</p>
+            <ul><li>完善问卷的细节，增加题目的类型、逻辑控制、显示界面及各种问卷质量控制的手段。</li>
+            <li>简化问卷编写的难度，使之可以直接读取excel或word问卷。</li>
+            <li>提供更方便的项目管理工具，包括访问员的控制、问卷质量管控、进度管理、样本量管控等。</li>
+            <li>提供数据处理、分析和可视化工具。</li></ul>
+            <h2>怎么使用这个系统？</h2><hr>
+            <p><strong>项目管理界面</strong></p>
+            <img src="/static/img/tutorial-example1.png" alt="操作界面">
+            <p>当需要增加新的调研问卷时点击新建项目按钮。</p>
+            <p>点击编辑问卷进入问卷编辑界面。</p>
+            <p>当问卷编辑完成后，可以通过访问问卷获得问卷的地址。</p>
+            <p>通过下载数据的连接可以下载问卷的数据。</p>
+            <h2>问卷的编辑方法</h2>
+            <p><strong>问卷编辑界面</strong></p>
+            <img src="/static/img/tutorial-example2.png" alt="问卷编辑页面">
+            <p>问卷预览会在右侧淡青色区域，完成后点击上传问卷将问卷上传至服务器。</p>
+            <p><strong>问卷编辑格式V0.1版</strong></p>
+            <p>题目实例</p>
+            <textarea name="" id="" cols="150" rows="100">{
+	"qtitle": "汽车品牌价值调研",
+	"question": {
+                "I": [
+			{
+				"qtype": 1,
+				"words": "本次调研的目的是XX，我们保证搜集回来的数据仅用于研究不对外泄露"
+			}
+		],
+		"Q1": [
+			{
+				"qchoices": [
+					"帕萨特",
+					"凯美瑞",
+					"雅阁",
+					"君越"
+				],
+				"qstem": "请问以下哪款车型对您最有吸引力?",
+				"qtype": 2
+			}
+		],
+		"Q2": [
+			{
+				"qchoices": [
+					"大众",
+					"丰田",
+					"本田",
+					"宝马",
+					"奔驰",
+					"日产",
+					"雷诺"
+				],
+				"qstem": "请选择您信赖的品牌",
+				"qtype": 3
+			}
+		],
+		"Q4": [
+			{
+				"qstem": "请输入您的姓名",
+				"qtype": 5
+			},
+			{
+				"qstem": "请输入您的年龄",
+				"qtype": 6
+			}
+		],
+		"Q3": [
+			{
+				"labels": [
+					"第一位",
+					"第二位",
+					"第三位"
+				],
+				"qchoices": [
+					"大众",
+					"丰田",
+					"本田",
+					"宝马",
+					"奔驰",
+					"日产",
+					"雷诺"
+				],
+				"qstem": "请您对下列品牌的认可度进行排序",
+				"qtype": 4
+			}
+		],
+		"Q5": [
+			{
+				"min": 1,
+				"qstem": "请您对您用车满意程度进行打分",
+				"qtype": 7,
+				"max": 10
+			}
+		]
+	},
+	"order": [
+		"I",
+		"Q1",
+		"Q2",
+		"Q3",
+		"Q4",
+		"Q5"
+	],
+	"answer_order": [
+		"Q1",
+		"Q2:1",
+		"Q2:2",
+		"Q2:3",
+		"Q2:4",
+		"Q2:5",
+		"Q2:6",
+		"Q2:7",
+		"Q3_1",
+		"Q3_2",
+		"Q3_3",
+		"Q4_1",
+		"Q4_2",
+		"Q5"
+	]
+}</textarea>
+            <p>整个题目是一个大字典，一级索引包括"qtitle"、"question"、"order"、"answer_order"，
+            其中qtitle是问卷的题目，question是问卷的题目，order是题目的顺序，
+                answer_order是回收数据的字段顺序在上传时会自动加入。</p>
+            <p>question的值也是一个大字典，索引就是题目的编号，每个题目的值是一个数组，列表的元素是一个个小字典。
+            设计初衷是这样的，每一题可能包含几个类型的小题目。每个小题目是一个字典。目前提供7种题目类型。</p>
+            <p>1. 说明题</p>
+            <textarea name="" id="" cols="150" rows="4">{
+    "qtype": 1,
+    "words": "本次调研的目的是XX，我们保证搜集回来的数据仅用于研究不对外泄露"
+}</textarea>
+            <p>包含两个字段：qtype和words。qtype的值为1，words值为需要说明的文字。</p>
+            <p>2. 单选</p>
+            <textarea name="" id="" cols="150" rows="5">{
+    "qtype": 2,
+    "qstem": "请问以下哪款车型对您最有吸引力?",
+    "qchoices": ["帕萨特","凯美瑞","雅阁","君越"]
+}</textarea>
+            <p>包含两个字段：qtype、qstem和qchoices。qtype的值为2，qstem值为题目的题干内容，
+                qchoices为选项的数组。</p>
+            <p>3. 多选</p>
+            <textarea name="" id="" cols="150" rows="5">{
+    "qtype": 3,
+    "qstem": "请选择您信赖的品牌",
+    "qchoices": ["大众","丰田","本田","宝马","奔驰","日产","雷诺"]
+}</textarea>
+            <p>包含两个字段：qtype、qstem和qchoices。qtype的值为3，qstem值为题目的题干内容，
+                qchoices为选项的数组。</p>
+            <p>4. 排序题</p>
+            <textarea name="" id="" cols="150" rows="6">{
+    "qtype": 4,
+    "qstem": "请您对下列品牌的认可度进行排序",
+    "labels": ["第一位","第二位","第三位"],
+    "qchoices": ["大众","丰田","本田","宝马","奔驰","日产","雷诺"]
+}</textarea>
+            <p>包含两个字段：qtype、qstem、labels和qchoices。qtype的值为4，qstem值为题目的题干内容，
+                labels为需要排序的标签数组，qchoices为选项的数组。</p>
+            <p>5. 文字填空题</p>
+            <textarea name="" id="" cols="150" rows="4">{
+    "qtype": 5,
+    "qstem": "请输入您的姓名"
+}</textarea>
+            <p>包含两个字段：qtype和qstem。qtype的值为5，qstem值为题干。</p>
+            <p>6. 数值填空题</p>
+            <textarea name="" id="" cols="150" rows="4">{
+    "qtype": 6,
+    "qstem": "请输入您的年龄"
+}</textarea>
+            <p>包含两个字段：qtype和qstem。qtype的值为6，qstem值为题干。</p>
+            <p>7. 打分题</p>
+            <textarea name="" id="" cols="150" rows="5">{
+    "qtype": 7,
+    "qstem": "请您对您用车满意程度进行打分",
+    "min":1,
+    "max":10
+}</textarea>
+            <p>包含四个字段：qtype、qstem、min和max。qtype的值为7，qstem值为题目的题干内容，
+                min为最小的分值，max为最大的分值。</p>
+            <p><strong>问卷的顺序</strong></p>
+            <p>order是一个包含所有题目的数组，显示问卷时会按照这个数组上元素的顺序进行显示，若不在此数组内，
+            则不会显示。</p>
+        </div>
+    <script>
+        window.onload = function () {
+            heightadjust(".left-sidebar");
+            heightadjust(".main-content");
+        }
+        window.onresize = function () {
+            heightadjust(".left-sidebar");
+            heightadjust(".main-content");
+        }
+
+    </script>
+</body>
+</html>

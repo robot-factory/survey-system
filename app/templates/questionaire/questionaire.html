@@ -2,34 +2,17 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>问卷编辑</title>
+    <title>问卷</title>
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <style>
-        html, body {
-            height: 100%;
-            width: 100%;
-        }
+
 
         .display-box {
-            width: 80%;
-            height: 100%;
-            float: left;
-            margin-left: 5%;
-            background-color: #DDECEE;
-        }
-        .menu {
-            margin-top: 10px;
-            margin-bottom: 10px;
-        }
-        #json-question {
-            width: 90%;
-            font-size: 26px;
-            overflow: auto;
-        }
-        .display-box {
-            overflow:auto;
+            margin-left: 30px;
+            background-color: transparent;
+            padding: 10px 100px
         }
 
         .display-box .qtitle {
@@ -97,6 +80,10 @@
         .display-box .dafenti .xuanxiangqu .output:before{
             content:"得分：";
         }
+        .submit {
+            margin:30px 20%;
+            width: 60%;
+        }
     </style>
 </head>
 <body>
@@ -145,7 +132,7 @@
     </script>
 </div>
 <div>
-    <button class="submit" onclick="postformdata()">提交问卷</button>
+    <button class="submit btn btn-primary" onclick="postformdata()">提交问卷</button>
 </div>
 <script>
     function questionaire_parser() {
@@ -353,7 +340,6 @@
             var dataobject = JSON.parse(data);
             var qhtml = qhtml_parser(dataobject);
             $(".display-box").html(qhtml);
-
         })
     }
 </script>

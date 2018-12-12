@@ -9,4 +9,5 @@ questionaire_blueprint = Blueprint(
     url_prefix='/questionaire',
 )
 
-from . import view
+from . import projectmanage
+from . import direction

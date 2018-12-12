@@ -107,7 +107,7 @@ class QAHandler:
         answer_order = self.ques_get(qid)['ques']['answer_order']
         data_path= os.path.join(base_dir,'db','project_data',qid,'data.xlsx')
         data_db_name = self.get_data_collection(qid)
-        result = list(self.db[data_db_name].find());
+        result = list(self.db[data_db_name].find())
         output = pd.DataFrame(columns=answer_order)
         output.append(pd.DataFrame(result),ignore_index=True,sort=False).to_excel(data_path)
         return data_path
@@ -115,10 +115,13 @@ class QAHandler:
     def ques_add(self, qid, ques_dict):
         id = ObjectId(qid)
         col_project = self.db[self.project_col]
-
+        u_ts = int(time.time() * 1000)
+        ut = str(datetime.datetime.now())
         return col_project.update(
             {'_id': id},
-            {'$set': {"ques":ques_dict}}
+            {'$set': {"ques":ques_dict,
+                      'ut':ut,
+                      'u_ts':u_ts}}
         )
 
     def ques_get(self,qid):
