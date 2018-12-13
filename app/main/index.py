@@ -23,7 +23,7 @@ log = logger(__name__)
 def index():
     # log.info('index')
     # return "你好哈"
-    return redirect(url_for('login'))
+    return redirect(url_for('.login'))
 
 @main.route('/login', methods=['GET', 'POST'])
 def login():
