@@ -69,11 +69,11 @@ def register():
         mix_word = str(secret_key)+str(username)+str(pwd)
         sha = sha1(mix_word.encode('utf-8'))
         sha_pwd = sha.hexdigest()
-        userdata = {}
-        userdata['email'] = request.form.get('email')
+        user_data = {}
+        user_data['email'] = request.form.get('email')
 
-        result = qadb.user_add(username, sha_pwd, userdata)
-        return redirect(url_for('.project'))
+        result = qadb.user_add(username, sha_pwd, user_data)
+        return redirect(url_for('.login'))
 
 
 @main.route('/project')
