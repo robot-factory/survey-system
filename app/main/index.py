@@ -22,8 +22,8 @@ log = logger(__name__)
 @main.route('/')
 def index():
     # log.info('index')
-    return "你好哈"
-
+    # return "你好哈"
+    return redirect(url_for('login'))
 
 @main.route('/login', methods=['GET', 'POST'])
 def login():
