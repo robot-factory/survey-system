@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .hemoxing {
+            height:200px;
+            width: 300px;
+            background-color:red;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <button>1</button>
+        <button>1</button>
+        <button>1</button>
+        <button>1</button>
+        <button>1</button>
+        <button>1</button>
+    </div>
+    <div class="hemoxing">盒模型</div>
+    <script>
+        var but = document.querySelector("button");
+        //but.parentElement.removeChild(but);
+        var newbut = document.createElement('button');
+        newbut.innerText=2;
+        but.parentElement.appendChild(newbut);
+        //but.parentElement.appendChild(newbut);
+        //but.parentElement.appendChild(newbut);
+        but.addEventListener('click',function (Event) {
+            console.log(Event);
+        })
+    </script>
+</body>
+</html>
