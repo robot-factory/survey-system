@@ -48,11 +48,17 @@ def login():
             }
             session.update(user_data)
             respose = make_response(redirect(url_for('.project')))
+            respose.set_cookie('if_login', 'true')
             respose.set_cookie('username', account_data['username'])
 
             return respose
         else:
             return jsonify((False, '账号或密码错误'))
+
+
+
+
+
 
 
 @main.route('/register', methods=['GET', 'POST'])
