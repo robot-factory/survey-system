@@ -63,7 +63,6 @@
         .left-sidebar {
             width:177px;
             background-color: rgb(238, 248, 248);
-            position:absolute;
             top: 0px;
             left: 0;
             height: 100%;
@@ -118,7 +117,20 @@
             overflow: scroll;
         }
     </style>
-    <script>
+    <script id="mytoolbox">
+        // 辅助类函数
+        // 获取cookie
+        function getCookie(name) {
+            let reg = RegExp(name + '=([^;]+)');
+            let arr = document.cookie.match(reg);
+            if (arr) {
+                return arr[1];
+            }
+            else {
+                return '';
+            }
+        }
+
         function heightadjust(selector,delta=50) {
             document.querySelector(selector).style.height = document.documentElement.clientHeight - delta + "px";
         }
@@ -151,36 +163,151 @@
 
 
 <!--导航栏-->
-    <nav class="navbar  bg-bcg" role="navigation">
+   <header class="top" role="header">
+    <div class="navbar navbar-static-top navbar-inverse bg-bcg" role="navigation">
         <div class="container-fluid">
-            <div class="navbar-header left">
-                <a class="navbar-brand white-font brand" href="#">生产者</a>
-            </div>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 
-            <div class="left">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a class="white-font" href="#">调研系统</a></li>
-                </ul>
+                </button>
+                <a class="navbar-brand white-font font-size-24" href="/user/index">
+                    生产者
+                </a>
             </div>
-
-            <div class="right">
+            <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="dropdown right tag">
-                        <a href="#" class="dropdown-toggle white-font" data-toggle="dropdown">
-                            {{ data.username }}
-                            <b class="caret"></b>
-                        </a>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle white-font" data-toggle="dropdown" href="javascript:void(0)">
+                            调研系统<b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">个人中心</a></li>
+                            <li>
+                                <a tabindex="-1" href="/project" data-original-title="" title="">
+                                    项目管理</a>
+                            </li>
+                            <li class="hidden">
+                                <a tabindex="-1" href="/roles/list/" data-original-title="" title="">
+                                    进度统计</a>
+                            </li>
+                            <li hidden>
+                                <a tabindex="-1" href="/userstatschartview/chart/" data-original-title="" title="">
+                                    权限管理</a>
+                            </li>
                             <li class="divider"></li>
-                            <li><a href="#">注销</a></li>
+                            <li>
+                                <a tabindex="-1" href="/questionaire/tutorial" data-original-title="" title="">
+                                    使用教程</a>
+                            </li>
+                            <li hidden>
+                                <a tabindex="-1" href="/viewmenus/list/" data-original-title="" title="">
+                                    视图/菜单</a>
+                            </li>
+                            <li hidden>
+                                <a tabindex="-1" href="/permissionviews/list/" data-original-title="" title="">
+                                    视图/菜单权限</a>
+                            </li>
+                            <li hidden>
+                                <a tabindex="-1" href="/logmodelview/list/" data-original-title="" title="">
+                                    操作日志</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle white-font" data-toggle="dropdown" href="javascript:void(0)">
+                            数据系统<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="/analysis/chart">
+                                    图表</a>
+                            </li>
+                            <li>
+                                <a href="/analysis/dashboard">
+                                    看板</a>
+                            </li>
+                            <li>
+                                <a href="/analysis/report">
+                                    报告</a>
+                            </li>
+                            <li hidden>
+                                <a href="/annotationlayermodelview/list/">
+                                    数据库</a>
+                            </li>
+                            <li hidden>
+                                <a href="/annotationmodelview/list/">
+                                    使用说明</a>
+                            </li>
 
                         </ul>
                     </li>
+
+                    <li class="dropdown hidden">
+                        <a class="dropdown-toggle white-font" data-toggle="dropdown" href="javascript:void(0)">
+                            管理工具<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="/superset/import_dashboards">
+                                    清单</a>
+                            </li>
+                            <li>
+                                <a href="/csstemplatemodelview/list/">
+                                    便笺</a>
+                            </li>
+                            <li>
+                                <a href="/queryview/list/">
+                                    笔记</a>
+                            </li>
+
+
+                        </ul>
+                    </li>
+
+                    <li class="dropdown hidden">
+                        <a class="dropdown-toggle white-font" href="javascript:void(0)">
+                            论坛</a>
+                    </li>
+                    <!--
+                    <li>
+                        <a tabindex="-1" href="/chart/list/">
+                            Charts</a>
+                    </li>
+                    -->
+
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+
+                    <li class="dropdown">
+                        <a class="dropdown-toggle white-font" data-toggle="dropdown" title="" href="javascript:void(0)">
+                            <span id="username"></span>
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="hidden"><a href="/users/userinfo/" data-original-title="" title=""><span
+                                    class="fa fa-fw fa-user"></span>个人中心</a></li>
+                            <li><a href="/logout" data-original-title="" title=""><span
+                                    class="fa fa-fw fa-sign-out"></span>注销</a></li>
+                        </ul>
+                    </li>
+
                 </ul>
             </div>
         </div>
-</nav>
+    </div>
+</header>
+<script>
+    function getusername() {
+        if (getCookie('if_login') == 'true') {
+            return getCookie('username')
+        } else {
+            return 'Guest'
+        }
+    }
+
+    function showusername() {
+        let domsu = document.querySelector('#username');
+        domsu.innerText = getusername();
+    }
+
+    showusername();
+</script>
 
 <!--非导航栏-->
     <div class="main">
@@ -189,9 +316,8 @@
             <ul>
                 <li><a class="tag current" href="#">进行项目</a></li>
                 <li><a class="tag" href="/questionaire/tutorial">使用教程</a></li>
-                <li><a class="tag" href="#">更新日志</a></li>
-                <li><a class="tag" href="#">论坛交流</a></li>
-                <li><a class="tag" href="#">聊天室</a></li>
+                <li><a class="tag hidden" href="#">更新日志</a></li>
+
             </ul>
         </div>
 
@@ -305,9 +431,7 @@
                     <td>
                         <!--<a href="/questionaire/question?qid={{ project.qid }}" target="_top">访问问卷</a>-->
                     <a href="javascript:void(0);" onclick="window.open('/questionaire/question?qid={{ project.qid }}','_blank');" target="_blank">访问问卷</a><br/>
-
-
-</button></td>
+                    </td>
                 </tr>
                 {% endfor %}
                 <!--{% for project in data.projects %}-->
