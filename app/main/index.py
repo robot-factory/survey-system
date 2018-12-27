@@ -21,15 +21,15 @@ log = logger(__name__)
 
 @main.route('/')
 def index():
-    # log.info('index')
-    # return "你好哈"
-    return redirect(url_for('.login'))
+    # 主页
+    return render_template('main/index.html')
 
 @main.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
+        # 登录页
+        return render_template('main/index.html')
 
-        return render_template('main/login.html')
     if request.method == 'POST':
         secret_key = current_app.config.get('SECRET_KEY')
         username = request.form.get('username')
@@ -55,16 +55,11 @@ def login():
         else:
             return jsonify((False, '账号或密码错误'))
 
-
-
-
-
-
-
 @main.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'GET':
-        return render_template('main/register.html')
+        # 注册页
+        return render_template('main/index.html')
 
     if request.method == 'POST':
         secret_key = current_app.config.get('SECRET_KEY')
@@ -80,6 +75,29 @@ def register():
 
         result = qadb.user_add(username, sha_pwd, user_data)
         return redirect(url_for('.login'))
+
+@main.route('/register/if-username-exist',methods=['POST'])
+def if_username_exist():
+    print('if-username-exist','request-data',request.data)
+    if qadb.user_find_one({'username':request.data.decode('utf-8')}) is None:
+        return '0'
+    else:
+        return '1'
+
+
+@main.route('/logout')
+def logout():
+    user_data = {
+        'user_id': '',
+        'username': '',
+    }
+    session.update(user_data)
+    respose = make_response(redirect(url_for('main.login')))
+    respose.set_cookie('if_login', 'false')
+    respose.set_cookie('username', '')
+
+    return respose
+
 
 
 @main.route('/project')

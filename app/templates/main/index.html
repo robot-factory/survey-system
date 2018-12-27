@@ -1,10 +1,426 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>登录</title>
+    <link href="/favicon.ico" rel="shortcut icon">
+    <style>
+        html {
+            height: 100%;
+            width: 100%;
+        }
+
+        body {
+            background: url("/static/img/case_bg.png") no-repeat fixed top;
+            background-size: 100% 100%;
+            height: 100%;
+        }
+
+        .main {
+            background: rgba(0, 0, 0, 0.6) no-repeat fixed top;
+            width: 100%;
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100%;
+            margin: 0 0;
+        }
+
+        #login-box, #register-box {
+            width: 432px;
+            margin: 15% auto;
+            background: rgba(0, 0, 0, 0.1) no-repeat fixed top;
+            border: #ffffff solid 1px;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            padding: 10px;
+            color: #ffffff;
+            overflow: hidden;
+        }
+
+        #index-box {
+            width: 432px;
+            margin: 5% auto;
+
+
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            padding: 10px;
+            color: #ffffff;
+            overflow: hidden;
+        }
+
+        .form-control {
+            width: 100%;
+            height: 30px;
+        }
+
+        .crystal {
+            background: rgba(10, 10, 10, 0.2) no-repeat fixed top;
+            border: none;
+            padding: 4px 10px 4px 10px;
+            width: 95%;
+            margin-top: 20px;
+            color: #ffffff;
+        }
+
+        .btn_login, .btn_register {
+            width: 400px;
+            height: 36px;
+            margin-left: 16px;
+            margin-top: 5px;
+            background: rgb(22, 83, 68) no-repeat fixed top;
+            border: none;
+            color: white;
+            -webkit-border-radius: 0.25rem;
+            -moz-border-radius: 0.25rem;
+            border-radius: 0.25rem;
+        }
+        .btn_index {
+            width: 400px;
+            height: 48px;
+            margin-left: 16px;
+            margin-top: 20px;
+            font-size:18px;
+            background: rgb(22, 83, 68) no-repeat fixed top;
+            border: none;
+            color: white;
+            -webkit-border-radius: 24px;
+            -moz-border-radius: 24px;
+            border-radius: 24px;
+            cursor: pointer;
+        }
+        .text-middle {
+            text-align: center;
+        }
+        .index-title {
+            font-size:48px;
+            margin-bottom: 0px;
+            padding-bottom: 0px;
+        }
+        .index-subtitle{
+            margin-top: 5px;
+            margin-bottom: 40px;
+            font-size: 24px;
+            font-weight: normal;
+        }
+        .index-para {
+            color: #bdccce;
+        }
+
+        .form-control {
+            -webkit-border-radius: 0.25rem;
+            -moz-border-radius: 0.25rem;
+            border-radius: 0.25rem;
+            height: 36px;
+        }
+
+        .btn_login:hover, .btn_register:hover {
+            background: rgb(38, 103, 79) no-repeat fixed top;
+
+        }
+
+        .form-check-label {
+            font-size: 12px;
+        }
+
+        .form-check-input {
+            vertical-align: middle;
+            margin-top: 5px;
+        }
+        div.message {
+            margin: 0;
+            padding: 0 20px;
+            font-size:14px;
+
+        }
+
+
+        .left {
+            float: left;
+            margin-left: 16px;
+            color: #DDECEE;
+        }
+
+        .right {
+            float: right;
+            margin-right: 16px;
+            color: #DDECEE;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+    <!--<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css"-->
+    <!--integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
+    <script id="mytoolbox">
+        //设置cookie
+        function setCookie(name, value) {
+            document.cookie = name + '=' + value + ';';
+        }
+
+        //获取cookie
+        function getCookie(name) {
+            let reg = RegExp(name + '=([^;]+)');
+            let arr = document.cookie.match(reg);
+            if (arr) {
+                return arr[1];
+            }
+            else {
+                return '';
+            }
+        }
+
+        //删除cookie
+        function delCookie(name) {
+            setCookie(name, null, -1);
+        }
+
+        var ajax = function (method, path, data, reseponseCallback) {
+            var r = new XMLHttpRequest();
+            // 设置请求方法和请求地址
+            r.open(method, path, true);
+            // 设置发送的数据的格式
+            r.setRequestHeader('Content-Type', 'application/json');
+            // 注册响应函数
+            r.onreadystatechange = function () {
+                if (r.readyState === 4) {
+                    reseponseCallback(r)
+                }
+            };
+            // 发送请求
+            r.send(data)
+        }
+    </script>
 </head>
 <body>
-Hello
+<div class="main">
+    <div id="index-box" class="hidden">
+        <h1 class="index-title text-middle">生产者</h1>
+        <h3 class="index-subtitle text-middle">科技，让工作更便利</h3>
+        <p class="text-middle index-para">调研系统</p>
+        <p class="text-middle index-para">数据系统</p>
+        <button class="btn_index turn-to-login">前往登录</button>
+        <button class="btn_index turn-to-register">立即注册</button>
+    </div>
+
+    <div id="login-box" class="hidden">
+        <form action="/login" method="post">
+            <div class="form-group">
+
+                <input id="username" name="username" type="text" class="form-control crystal" placeholder="请输入用户账号">
+                <div class="message"></div>
+            </div>
+            <div class="form-group">
+                <input name="pwd" id="pwd" type="password" class="form-control crystal"
+                       placeholder="请输入密码">
+            </div>
+            <div class="form-check">
+                <input id="isRmbPwd" type="checkbox" class="form-check-input " onclick="onClickHander(this)">
+                <label class="form-check-label" for="isRmbPwd">
+                    记住密码
+                </label>
+            </div>
+            <button type="submit" class="btn_login" onclick="isRmbPwdHander()">登录</button>
+            <a class="form-check-label left hidden" href="#">忘记密码？</a>
+            <a id="turn-to-register" class="form-check-label right turn-to-register" href="javascript:void(0);">没有账号？注册</a>
+
+        </form>
+    </div>
+
+    <div id="register-box" class="hidden">
+        <form action="/register" method="post">
+            <div class="form-group">
+
+                <input id="register-username" name="username" type="text" class="form-control crystal"
+                       placeholder="请输入用户账号" required>
+                <div data-id="register-username" class="message"></div>
+            </div>
+            <div class="form-group">
+                <input id="register-email" name="email" type="email" class="form-control crystal"
+                       placeholder="请输入您的邮箱" required>
+                <div data-id="register-email" class="message"></div>
+            </div>
+            <div class="form-group">
+                <input name="pwd" id="register-pwd" type="password" class="form-control crystal"
+                       placeholder="请输入密码" required>
+                <div data-id="register-pwd" class="message"></div>
+            </div>
+            <div class="form-group">
+                <input name="rppwd" id="register-rppwd" type="password" class="form-control crystal"
+                       placeholder="请重复密码" required>
+                <div data-id="register-rppwd" class="message"></div>
+            </div>
+
+            <div class="form-check hidden">
+                <input type="checkbox" class="form-check-input" id="ifread_usrbook">
+                <label class="form-check-label" for="exampleCheck1">我已阅读 <a class="grey" href="">《用户手册》</a></label>
+            </div>
+            <button type="submit" class="btn_register">注册</button>
+            <a id="turn-to-login" class="form-check-label left turn-to-login" href="javascript:void(0);">已有账号前往登录>></a>
+
+        </form>
+
+    </div>
+</div>
+<script>
+
+
+    // 是否记住密码部分
+    function onClickHander(obj) {
+        if (obj.checked) {
+            setCookie('pwd', document.getElementById("pwd").value);
+            setCookie('isRmbPwd', document.getElementById("isRmbPwd").checked);
+            // document.getElementById("isRmbPwd").checked = true;
+        }
+        else {
+            delCookie('pwd');
+            setCookie('isRmbPwd', document.getElementById("isRmbPwd").checked);
+            // document.getElementById("isRmbPwd").checked = false;
+        }
+
+    }
+
+    function isRmbPwdHander() {
+        if (document.getElementById("isRmbPwd").checked) {
+            setCookie('pwd', document.getElementById("pwd").value);
+            setCookie('isRmbPwd', document.getElementById("isRmbPwd").checked);
+        }
+        else {
+            delCookie('pwd');
+            setCookie('isRmbPwd', document.getElementById("isRmbPwd").checked);
+        }
+    }
+    // login页载入相关信息
+    var load_usr = function () {
+        let username = getCookie("username"); //如果用户名为空,则给表单元素赋空值
+        if (username == '') {
+            document.getElementById("username").value = "";
+        }
+        else {
+            document.getElementById("username").value = username;
+        }
+    };
+
+    var load_pwd = function () {
+        // pwd
+        let pwd = getCookie("pwd"); //如果用户名为空,则给表单元素赋空值
+        if (pwd == '') {
+            document.getElementById("pwd").value = "";
+        }
+        else {
+            document.getElementById("pwd").value = pwd;
+        }
+    };
+
+    var load_isRmbPwd = function () {
+        // isRmbPwd
+        let isRmbPwd = getCookie("isRmbPwd"); //如果用户名为空,则给表单元素赋空值
+        if (isRmbPwd == 'false') {
+
+            document.getElementById("isRmbPwd").checked = false;
+        }
+        else {
+            document.getElementById("isRmbPwd").checked = true;
+        }
+    };
+    // 根据地址显示相应内容
+    var show_content = function () {
+        console.log('pathname', location.pathname);
+        console.log('islogin', location.pathname == '/login');
+        if (location.pathname == '/login') {
+            document.getElementById('login-box').classList.remove('hidden');
+            document.title = '登录';
+        }
+        if (location.pathname == '/register') {
+            document.getElementById('register-box').classList.remove('hidden');
+            document.title = '注册';
+        }
+        if (location.pathname == '/') {
+            document.getElementById('index-box').classList.remove('hidden');
+            document.title = '主页';
+        }
+
+    };
+    //
+    function turntopage(pathname) {
+        location.pathname = pathname;
+    };
+
+    var validate_username = function (username,callback) {
+        ajax('POST','/register/if-username-exist',username, callback)
+    }
+
+    var validate_psw = function () {
+        var first_psw = document.querySelector('#register-pwd');
+        var second_psw = document.querySelector('#register-rppwd');
+        if(first_psw.value != second_psw.value){
+            first_psw.nextSibling.nextElementSibling.innerHTML="两次输入密码不符，请重新输入"
+        }
+    }
+
+</script>
+<script>
+    // 绑定函数
+    function bindfunc(selector, eventname, callback) {
+        var ele = document.querySelector(selector);
+        ele.addEventListener(eventname, callback);
+    };
+
+    function bindfuncAll(selector, eventname, callback){
+        var eles = document.querySelectorAll(selector);
+        for(let i = 0;i<eles.length;i++){
+            eles[i].addEventListener(eventname, callback);
+        }
+    }
+
+    bindfuncAll('.turn-to-login', 'click', function () {
+        turntopage('/login');
+        document.title = '登录';
+    });
+
+    bindfuncAll('.turn-to-register', 'click', function () {
+        turntopage('/register');
+        document.title = '注册';
+    });
+
+    bindfunc('#register-username','change',function (event) {
+        //获得对象的值
+        var username = event.target.value;
+        var messagebox = event.target.nextSibling.nextElementSibling;
+        validate_username(username,function (r) {
+            // 回调函数
+            console.log('if-username-exist',r);
+            if(r.responseText== "1"){
+                // console.log('r.responseText',r.responseText=="1")
+                //console.log(username,'已存在')
+                messagebox.innerHTML = '该用户名已被使用'
+            }else{
+                //console.log(username,'可使用')
+                messagebox.innerHTML = '该用户名可以使用'
+            }
+        })
+
+    });
+
+    bindfunc('#register-rppwd','change',function (event) {
+        validate_psw()
+    });
+
+</script>
+<script>
+    // 主要入口
+    // 界面载入时启动
+    window.onload = function () { //从Cookie获取到用户名
+        load_usr();
+        load_pwd();
+        load_isRmbPwd();
+        show_content();
+
+    }
+</script>
 </body>
 </html>
